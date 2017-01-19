@@ -173,6 +173,35 @@ to different days as long as its sufficiently close to the original day they
 needed done, and :math:`(1)` and :math:`(3)` ensure the number of trips being
 made each day are as few as possible.
 
+One issue I saw with the formulation we came up with is that if a couple of
+days were to have a much higher demand for drop-offs and pick-ups than
+all of the others, :math:`(3)` would not be a tightly enforced
+constraint, and the other days' demands would not be smoothed effectively. To
+work around this, we took a 'divide and conquer' approach to our final
+formulation for demand smoothing. Rather than trying to smooth all of our
+input days of data with the integer program in one go, we broke the data set
+into equal sized chunks (periods) and had the integer program solve each
+period individually.
+
+To further optimize results, we repeated this process for periods with
+lengths varying from a couple days to a couple weeks.
+
+.. note::
+
+    We picked the periods to be at least a couple of days so at minimum some
+    of the day's demands in that period could be reassigned. We capped the
+    periods' lengths at a couple weeks, however, because such large demands
+    would appear for one day that our integer program would no longer smooth
+    very effectively.
+
+After running the integer program over all periods in our data for each
+different period length, we picked the smoothed data we were going to work
+with by whichever period length resulted in the least amount of variability
+over all of its days (thus was the most smooth). Now that we have chosen the
+smoothest data we can for drop-offs and pick-ups to be made each day, we can
+formulate how we're going to figure out how many assets (semi-trucks,
+equipment handlers, and equipment sets) we're going to need to meet each
+construction site's demand.
 
 
 
