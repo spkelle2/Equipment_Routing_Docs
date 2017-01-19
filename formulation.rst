@@ -168,6 +168,13 @@ demand for drop-offs or pick-ups, the number of truckloads going to or from
 that site within the time window must equal the number of truckloads
 originally demanded to or from site :math:`i` on day :math:`l`.
 
+Put in plain English, :math:`(2)` allows us to assign pick-ups and drop-offs
+to different days as long as its sufficiently close to the original day they
+needed done, and :math:`(1)` and :math:`(3)` ensure the number of trips being
+made each day are as few as possible.
+
+
+
 
 Individual Day
 --------------

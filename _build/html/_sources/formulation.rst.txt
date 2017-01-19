@@ -99,8 +99,9 @@ at those sites are.
 
 .. note::
 
-    One drop-off or pick-up is equivalent to one set of equipment as that is
-    the max that a semi-truck can haul at once.
+    One drop-off or pick-up (1) is equivalent to one set of equipment (2) as
+    that is the maximum capacity for a single truckload (3). These three
+    terms will be used interchangeably moving forward.
 
     Furthermore, the number cooresponding to a construction site's demand for
     sets of equipment will be negative if the equipment is being dropped-off
@@ -166,8 +167,17 @@ equal to any single day's sum of drop-offs and pick-ups. Our last constraint,
 demand for drop-offs or pick-ups, the number of truckloads going to or from
 that site within the time window must equal the number of truckloads
 originally demanded to or from site :math:`i` on day :math:`l`.
-day.
+
+Put in plain English, :math:`(2)` allows us to assign pick-ups and drop-offs
+to different days as long as its sufficiently close to the original day they
+needed done, and :math:`(1)` and :math:`(3)` ensure the number of trips being
+made each day are as few as possible.
+
+
 
 
 Individual Day
 --------------
+
+
+

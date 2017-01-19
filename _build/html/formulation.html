@@ -149,8 +149,9 @@ pick-up and a second list tracking what the demand for drop-offs or pick-ups
 at those sites are.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>One drop-off or pick-up is equivalent to one set of equipment as that is
-the max that a semi-truck can haul at once.</p>
+<p>One drop-off or pick-up (1) is equivalent to one set of equipment (2) as
+that is the maximum capacity for a single truckload (3). These three
+terms will be used interchangeably moving forward.</p>
 <p>Furthermore, the number cooresponding to a construction site&#8217;s demand for
 sets of equipment will be negative if the equipment is being dropped-off
 and positive if the equipment is being picked-up.</p>
@@ -200,8 +201,11 @@ equal to any single day&#8217;s sum of drop-offs and pick-ups. Our last constrai
 <span class="math">\((2)\)</span>, adds that for any site, <span class="math">\(i\)</span>, on any day, <span class="math">\(l\)</span>, with a
 demand for drop-offs or pick-ups, the number of truckloads going to or from
 that site within the time window must equal the number of truckloads
-originally demanded to or from site <span class="math">\(i\)</span> on day <span class="math">\(l\)</span>.
-day.</p>
+originally demanded to or from site <span class="math">\(i\)</span> on day <span class="math">\(l\)</span>.</p>
+<p>Put in plain English, <span class="math">\((2)\)</span> allows us to assign pick-ups and drop-offs
+to different days as long as its sufficiently close to the original day they
+needed done, and <span class="math">\((1)\)</span> and <span class="math">\((3)\)</span> ensure the number of trips being
+made each day are as few as possible.</p>
 </div>
 <div class="section" id="individual-day">
 <h2>Individual Day<a class="headerlink" href="#individual-day" title="Permalink to this headline">¶</a></h2>
