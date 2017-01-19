@@ -159,19 +159,23 @@ single day, :math:`l`. We can now form the following integer program:
 
     & \sum_{i} & w_{i,l} & \leq z \text{ } & \forall & \text{ } l &(3)
 
+    & & w_{i,l}, z & \in Z \geq 0 \text{ } & \forall & \text{ } i,l & (4)
+
 :math:`(1)` tells us that we are minimizing :math:`z`, the maximum number of
 pick-ups and drop-offs to be done on any single day. This is enforced by
 :math:`(3)`, stating that our objective, :math:`z`, must be greater than or
-equal to any single day's sum of drop-offs and pick-ups. Our last constraint,
-:math:`(2)`, adds that for any site, :math:`i`, on any day, :math:`l`, with a
+equal to any single day's sum of drop-offs and pick-ups.
+:math:`(2)` adds that for any site, :math:`i`, on any day, :math:`l`, with a
 demand for drop-offs or pick-ups, the number of truckloads going to or from
 that site within the time window must equal the number of truckloads
-originally demanded to or from site :math:`i` on day :math:`l`.
+originally demanded to or from site :math:`i` on day :math:`l`. Our last
+constraint, :math:`(4)`, ensures all our variables are non-negative integers.
 
 Put in plain English, :math:`(2)` allows us to assign pick-ups and drop-offs
 to different days as long as its sufficiently close to the original day they
 needed done, and :math:`(1)` and :math:`(3)` ensure the number of trips being
-made each day are as few as possible.
+made each day are as few as possible. :math:`(4)` simply prevents any half-
+drop-offs or half-pick-ups from being made.
 
 One issue I saw with the formulation we came up with is that if a couple of
 days were to have a much higher demand for drop-offs and pick-ups than
@@ -204,9 +208,144 @@ equipment handlers, and equipment sets) we're going to need to meet each
 construction site's demand.
 
 
-
 Individual Day
 --------------
+
+Knowing how many drop-offs and pick-ups needed made each day at this point,
+we tried to route all equipment hauler movements throughout the time range in
+one integer program. This proved quite unsuccessful, however, as our integer
+program we modeled after that was so large it could not run in a feasible
+amount of time. After some trial and error, we discovered that equipment
+hauler routing (where each equipment hauler goes at each point in time) could
+be done very efficiently when done one day at a time, thus everything in this
+section is repeated for each day in our timeframe.
+
+.. note::
+
+    Due to the complexity of trying to route our equipment haulers, it was
+    necessary to smooth the demand beforehand. Smoothing could also take
+    place by routing for multiple days at a time, assigning time windows to
+    deliveries in the same manner as in the smoothing process; however, doing
+    this even for 2 or 3 days resulted in computation times above feasibility.
+
+Before solving for the routes each equipment hauler will take each day, we
+need to create a few parameters our routing integer program will need to be
+able to solve. They are the following:
+
+    * demand (indexed by :math:`i`)
+        A list of the number of drop-offs and pick-ups each site needs this
+        day, ignoring the sites with no demand.
+
+    * locations (indexed by :math:`i`)
+        A list of all sites with demand for drop-offs and pick-ups and the
+        hubs (where the equipment haulers start and end their day -
+        represented as different numbers but can be same physical location).
+        Has length :math:`n+1`. The hubs are :math:`locations_{0}` and
+        :math:`locations_{n+1}`.
+
+    * customers (indexed by :math:`i`)
+        A list of only just the sites with demand for drop-offs and pick-ups.
+        Has length :math:`n-1`.
+
+    * route constraints (indexed by :math:`i,j`)
+        A matrix of the number of times the route from site, :math:`i`, to
+        site, :math:`j`, can be traveled, indexed in the same order as the
+        locations parameter. Forces the model to adhere to real
+        world constraints, like an equipment hauler not being able to drop
+        equipment off at a site, :math:`j`, if he just came from a site,
+        :math:`i`, where he also dropped equipment off. (Equipment always
+        stays in a set and takes the full capacity of a semi-truck; therefore,
+        this equipment hauler would have no equipment to drop off.) This will
+        force an equipment hauler to return to the hub (where he starts and
+        ends his day) to unload or reload his semi-truck when he can no
+        longer meet the demand of any remaining sites with his semi-truck in
+        its current state (either with an equipment set or empty).
+
+    * travel (indexed by :math:`i,j`)
+        A matrix stating how many miles apart a site, :math:`i`, is from a
+        site, :math:`j`, indexed in the same order as the locations list.
+        The sites represented in this matrix are only those
+        which have a demand for drop-offs or pick-ups on this day, and the
+        distances are calculated by converting the differences in
+        geographical coordinates listed for each site.
+
+    * subsets (indexed by :math:`m`)
+        A list of all of the even-sized subsets of sites with demand on a
+        given day, necessary for forcing continuity in our equipment haulers'
+        routes.
+
+    * M
+        An arbitrarily large number.
+
+    * haulers (indexed by :math:`k`)
+        A list of the equipment haulers we have available.
+
+Also recall a few parameters we stated as inputs for each region we'll solve.
+
+    * rate of travel, :math:`rate`
+
+    * length of working day, :math:`L`
+
+    * average time to load/unload a semi-truck, :math:`handle`
+
+Lastly, the problem makes use of two variables. The first variable is
+:math:`x_{i,j,k}`, the number of times equipment hauler, :math:`k`, takes the
+route from a site, :math:`i`, to a site, :math:`j`. The other needed variable
+is :math:`y_{m,k}`, whether or not an equipment hauler, :math:`k`, enters the
+subset of points, :math:`m`.
+
+Now that we have declared all of our parameters we will need to solve our
+equipment hauler routing for each day, we can define our model.
+
+.. math::
+
+   \text{min} &\sum_{i} \sum_{j} \sum_{k} & &t_{i,j}x_{i,j,k} & & & & &(1)
+
+   \text{s.t.:}
+
+   &\sum_{j\backslash\{0\}} & &x_{0,j,k} & &\geq 1 & &\forall \text{ } k \in
+   \text{haulers} &(2)
+
+   &\sum_{i} x_{i,h,k} &-\sum_{j} &x_{h,j,k} & &= 0 & &\forall \text{ } h \in
+   \text{customers}, k \in \text{haulers} &(3)
+
+   &\sum_{i} & &x_{i,n+1,k} & &= 1 & &\forall \text{ } k \in \text{haulers}
+   &(4)
+
+   &\sum_{i} \sum_{j} & &x_{i,j,k}(h + \frac{t_{i,j}}{r}) & &\leq l + h &
+   &\forall \text{ } k \in \text{haulers} &(5)
+
+   &\sum_{j} \sum_{k} & &x_{i,j,k} & &= \mid d_{i} \mid & &\forall \text{ } i
+   \in \text{customers} &(6)
+
+   &\sum_{k} & &x_{i,j,k} & &\leq D_{i,j} & &\forall \text{ } i,j \in
+   \text{locations} &(7)
+
+   &\sum_{i' \in S_{m}} \sum_{j' \in S_{m}} & &x_{i,j,k} & &\leq My_{m,k} &
+   &\forall \text{ } k \in \text{haulers}, m \in \text{subsets} &(8)
+
+   &\sum_{i' \in S_{m}} \sum_{j \backslash S_{m}} & &x_{i,j,k} & &\geq
+   y_{m,k} & &\forall \text{ } k \in \text{haulers}, m \in \text{subsets} &(9)
+
+   & & &x_{i,j,k} & &\in Z \geq 0 & &\forall \text{ } i,j \in \text{locations},
+   k \in \text{haulers} &(10)
+
+   & & &y_{m,k} & &\in \{0,1\} & &\forall \text{ } k \in \text{haulers}, m
+   \in \text{subsets} &(11)
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
