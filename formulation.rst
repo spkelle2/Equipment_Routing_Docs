@@ -232,22 +232,24 @@ Before solving for the routes each equipment hauler will take each day, we
 need to create a few parameters our routing integer program will need to be
 able to solve. They are the following:
 
-    * demand (indexed by :math:`i`)
-        A list of the number of drop-offs and pick-ups each site needs this
+    * demand, :math:`d_{i}`
+        The number of drop-offs and pick-ups each site needs on a given
         day, ignoring the sites with no demand.
 
     * locations (indexed by :math:`i`)
-        A list of all sites with demand for drop-offs and pick-ups and the
-        hubs (where the equipment haulers start and end their day -
-        represented as different numbers but can be same physical location).
-        Has length :math:`n+1`. The hubs are :math:`locations_{0}` and
+        A list of all sites with demand for drop-offs and pick-ups or,
+        equivalently, the sites, :math:`i`, for which :math:`d_{i}` exists on
+        a given day. This list also includes the hubs, where the equipment
+        haulers start and end their day. They're represented as different
+        numbers but can be same physical location. This list
+        has length :math:`n+1`. The hubs are :math:`locations_{0}` and
         :math:`locations_{n+1}`.
 
     * customers (indexed by :math:`i`)
-        A list of only just the sites with demand for drop-offs and pick-ups.
-        Has length :math:`n-1`.
+        A list of only just the sites with demand for drop-offs and pick-ups
+        on a given day. Has length :math:`n-1`.
 
-    * route constraints (indexed by :math:`i,j`)
+    * route constraints, :math:`D_{i,j}`
         A matrix of the number of times the route from site, :math:`i`, to
         site, :math:`j`, can be traveled, indexed in the same order as the
         locations parameter. Forces the model to adhere to real
@@ -261,7 +263,7 @@ able to solve. They are the following:
         longer meet the demand of any remaining sites with his semi-truck in
         its current state (either with an equipment set or empty).
 
-    * travel (indexed by :math:`i,j`)
+    * travel, :math:`t_{i,j}`
         A matrix stating how many miles apart a site, :math:`i`, is from a
         site, :math:`j`, indexed in the same order as the locations list.
         The sites represented in this matrix are only those
@@ -269,8 +271,8 @@ able to solve. They are the following:
         distances are calculated by converting the differences in
         geographical coordinates listed for each site.
 
-    * subsets (indexed by :math:`m`)
-        A list of all of the even-sized subsets of sites with demand on a
+    * subsets, :math:`S_{m}` (indexed by i')
+        A list of the even-sized subsets, :math:`m`, of sites with demand on a
         given day, necessary for forcing continuity in our equipment haulers'
         routes.
 
@@ -282,11 +284,11 @@ able to solve. They are the following:
 
 Also recall a few parameters we stated as inputs for each region we'll solve.
 
-    * rate of travel, :math:`rate`
+    * rate of travel, :math:`r`
 
-    * length of working day, :math:`L`
+    * length of working day, :math:`l`
 
-    * average time to load/unload a semi-truck, :math:`handle`
+    * average time to load/unload a semi-truck (handling time), :math:`h`
 
 Lastly, the problem makes use of two variables. The first variable is
 :math:`x_{i,j,k}`, the number of times equipment hauler, :math:`k`, takes the
@@ -333,7 +335,49 @@ equipment hauler routing for each day, we can define our model.
    & & &y_{m,k} & &\in \{0,1\} & &\forall \text{ } k \in \text{haulers}, m
    \in \text{subsets} &(11)
  
+:math:`(1)` tells us our objective is to minimize the total amount of time
+that our fleet of equipment haulers spend driving each day. :math:`(2)-(4)`
+add constraints for modeling the travel from one site to the next. :math:`(2)`
+says that each hauler must leave the hub each day, even if just to return to it
+at no cost (equivalent to not being used). If a hauler arrives at a site,
+:math:`h`, to make a drop-off or a pick-up, :math:`(3)` ensures that hauler
+also leaves that site for another. Once a hauler has made all drop-offs and
+pick-ups it needed to make for a day, :math:`(4)` requires that he returns to
+the hub. :math:`(5)` brings our time constraints into play. We required that
+all driving and unloading/loading (un/loading) of semi-trucks must be less
+than the length of the allowable work day. We then added the time of an extra
+un/loading to the workable day to reflect that on average, a semi-truck will
+not need un/loading at both the start and end of its day. :math:`(6)` covers
+our demand constraint, the requirement that each site, :math:`(i)`, must be
+visited as many times as it needs equipment dropped-off or picked-up each
+day. To ensure that :math:`(6)` only counts the visits that correspond to the
+type of demand the site has, :math:`(7)` applies the route constraints that
+ensure when a hauler visits a site his semi-truck is able to satisfy one unit
+of that site's demand. :math:`(8)-(9)` are additions to
+:math:`(2)-(4)`, enforcing that equipment haulers take routes that are only
+possible in the real world. :math:`(8)` monitors whether or not an equipment
+hauler enters a given subset of sites, while :math:`(9)` requires that an
+equipment hauler leave that set if he entered it. These constraints remove
+the possibility that the routes a hauler takes in a day are disconnected.
+Lastly, :math:`(10)-(11)` define the spaces for our variables, specifically
+that equipment haulers can take no partial routes and either enter or do not
+enter any given set of sites.
 
+One final piece of information remains to fully define our integer program
+for hauler routing, how many haulers (and therefore trucks) are available
+to be used on a given day. Since the purpose of the problem is to use as few
+assets as possible given a list of drop-offs and pick-ups to make each day,
+we start by running the model with as few haulers as possible, one, and rerun
+it, adding one hauler per rerun, until our model is feasible. Once we achieved
+feasibility, we recorded the total number of miles the haulers drove that day
+and how many hours each of the consequently worked into the tables created
+before running the first day's models.
+
+
+Reporting
+---------
+
+Text.
 
 
 

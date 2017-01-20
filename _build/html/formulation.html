@@ -260,28 +260,30 @@ able to solve. They are the following:</p>
 <blockquote>
 <div><ul class="simple">
 <li><dl class="first docutils">
-<dt>demand (indexed by <span class="math">\(i\)</span>)</dt>
-<dd>A list of the number of drop-offs and pick-ups each site needs this
+<dt>demand, <span class="math">\(d_{i}\)</span></dt>
+<dd>The number of drop-offs and pick-ups each site needs on a given
 day, ignoring the sites with no demand.</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt>locations (indexed by <span class="math">\(i\)</span>)</dt>
-<dd>A list of all sites with demand for drop-offs and pick-ups and the
-hubs (where the equipment haulers start and end their day -
-represented as different numbers but can be same physical location).
-Has length <span class="math">\(n+1\)</span>. The hubs are <span class="math">\(locations_{0}\)</span> and
+<dd>A list of all sites with demand for drop-offs and pick-ups or,
+equivalently, the sites, <span class="math">\(i\)</span>, for which <span class="math">\(d_{i}\)</span> exists on
+a given day. This list also includes the hubs, where the equipment
+haulers start and end their day. They&#8217;re represented as different
+numbers but can be same physical location. This list
+has length <span class="math">\(n+1\)</span>. The hubs are <span class="math">\(locations_{0}\)</span> and
 <span class="math">\(locations_{n+1}\)</span>.</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt>customers (indexed by <span class="math">\(i\)</span>)</dt>
-<dd>A list of only just the sites with demand for drop-offs and pick-ups.
-Has length <span class="math">\(n-1\)</span>.</dd>
+<dd>A list of only just the sites with demand for drop-offs and pick-ups
+on a given day. Has length <span class="math">\(n-1\)</span>.</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>route constraints (indexed by <span class="math">\(i,j\)</span>)</dt>
+<dt>route constraints, <span class="math">\(D_{i,j}\)</span></dt>
 <dd>A matrix of the number of times the route from site, <span class="math">\(i\)</span>, to
 site, <span class="math">\(j\)</span>, can be traveled, indexed in the same order as the
 locations parameter. Forces the model to adhere to real
@@ -297,7 +299,7 @@ its current state (either with an equipment set or empty).</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>travel (indexed by <span class="math">\(i,j\)</span>)</dt>
+<dt>travel, <span class="math">\(t_{i,j}\)</span></dt>
 <dd>A matrix stating how many miles apart a site, <span class="math">\(i\)</span>, is from a
 site, <span class="math">\(j\)</span>, indexed in the same order as the locations list.
 The sites represented in this matrix are only those
@@ -307,8 +309,8 @@ geographical coordinates listed for each site.</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>subsets (indexed by <span class="math">\(m\)</span>)</dt>
-<dd>A list of all of the even-sized subsets of sites with demand on a
+<dt>subsets, <span class="math">\(S_{m}\)</span> (indexed by i&#8217;)</dt>
+<dd>A list of the even-sized subsets, <span class="math">\(m\)</span>, of sites with demand on a
 given day, necessary for forcing continuity in our equipment haulers&#8217;
 routes.</dd>
 </dl>
@@ -328,9 +330,9 @@ routes.</dd>
 <p>Also recall a few parameters we stated as inputs for each region we&#8217;ll solve.</p>
 <blockquote>
 <div><ul class="simple">
-<li>rate of travel, <span class="math">\(rate\)</span></li>
-<li>length of working day, <span class="math">\(L\)</span></li>
-<li>average time to load/unload a semi-truck, <span class="math">\(handle\)</span></li>
+<li>rate of travel, <span class="math">\(r\)</span></li>
+<li>length of working day, <span class="math">\(l\)</span></li>
+<li>average time to load/unload a semi-truck (handling time), <span class="math">\(h\)</span></li>
 </ul>
 </div></blockquote>
 <p>Lastly, the problem makes use of two variables. The first variable is
@@ -352,6 +354,32 @@ equipment hauler routing for each day, we can define our model.</p>
 y_{m,k} &amp; &amp;\forall \text{ } k \in \text{haulers}, m \in \text{subsets} &amp;(9)\\&amp; &amp; &amp;x_{i,j,k} &amp; &amp;\in Z \geq 0 &amp; &amp;\forall \text{ } i,j \in \text{locations},
 k \in \text{haulers} &amp;(10)\\&amp; &amp; &amp;y_{m,k} &amp; &amp;\in \{0,1\} &amp; &amp;\forall \text{ } k \in \text{haulers}, m
 \in \text{subsets} &amp;(11)\end{aligned}\end{align} \]</div>
+<p><span class="math">\((1)\)</span> tells us our objective is to minimize the total amount of time
+that our fleet of equipment haulers spend driving each day. <span class="math">\((2)-(4)\)</span>
+add constraints for modeling the travel from one site to the next. <span class="math">\((2)\)</span>
+says that each hauler must leave the hub each day, even if just to return to it
+at no cost (equivalent to not being used). If a hauler arrives at a site,
+<span class="math">\(h\)</span>, to make a drop-off or a pick-up, <span class="math">\((3)\)</span> ensures that hauler
+also leaves that site for another. Once a hauler has made all drop-offs and
+pick-ups it needed to make for a day, <span class="math">\((4)\)</span> requires that he returns to
+the hub. <span class="math">\((5)\)</span> brings our time constraints into play. We required that
+all driving and unloading/loading (un/loading) of semi-trucks must be less
+than the length of the allowable work day. We then added the time of an extra
+un/loading to the workable day to reflect that on average, a semi-truck will
+not need un/loading at both the start and end of its day. <span class="math">\((6)\)</span> covers
+our demand constraint, the requirement that each site, <span class="math">\((i)\)</span>, must be
+visited as many times as it needs equipment dropped-off or picked-up each
+day. To ensure that <span class="math">\((6)\)</span> only counts the visits that correspond to the
+type of demand the site has, <span class="math">\((7)\)</span> applies the route constraints that
+ensure when a hauler visits a site his semi-truck is able to satisfy one unit
+of that site&#8217;s demand. <span class="math">\((8)-(9)\)</span> are additions to
+<span class="math">\((2)-(4)\)</span>, enforcing that equipment haulers take routes that are only
+possible in the real world. <span class="math">\((8)\)</span> monitors whether or not an equipment
+hauler enters a given subset of sites, while <span class="math">\((9)\)</span> requires that an
+equipment hauler leave that set if he entered it. Lastly, <span class="math">\((10)-(11)\)</span>
+define the spaces for our variables, specifically that equipment haulers can
+take no partial routes and either enter or do not enter any given set of
+sites.</p>
 </div>
 </div>
 
