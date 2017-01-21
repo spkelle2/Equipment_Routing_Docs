@@ -27,6 +27,7 @@
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Reporting" href="reporting.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -50,8 +51,36 @@
 the time to explore that I think would have improved our result.</p>
 <p>The first had to do with the smoothing integer program. The goal of the model
 was to minimize the variation amongst the days. Given that variation is a
-second order function, I would have liked to have had the time to research
-approaches to smoothing demand with a Quadatric</p>
+quadratic function, I would have liked to have had the time to research
+approaches to smoothing demand with an Integer Quadratic Program. If the
+objective of our smoothing function could have been quadratic, I could have
+been able to minimize the overall variation, resulting in a tighter smoothing
+of all the days&#8217; demands.</p>
+<p>I also would have liked to have cleaned up the routing integer program as
+well. Constraints <span class="math">\((8)-(9)\)</span> despite solving a key issue with the model,
+were very computationally expensive as they grew exponentially relative to
+the number of sites that had demand for a given day. Given how small the
+problem size was for each day (never more than 10 locations), dealing with
+exponential constraint growth was not an issue. However, finding a way to
+model the problem in the same manner but without the exponential constraints
+would be necessary for scaling the number of locations for which we could
+solve at one time.</p>
+</div>
+<div class="section" id="closing-remarks">
+<h2>Closing Remarks<a class="headerlink" href="#closing-remarks" title="Permalink to this headline">¶</a></h2>
+<p>A brief bit about me. At time of writing, I&#8217;m a studying Industrial Engineer
+at the University of Illinois. My interest areas lie in Operations Research
+and Computer Science. I really enjoy Operations Research for the art of
+modeling mathematically the world around me and having a means of making a
+decision on what to do with whatever I have modeled. I developed an interest
+in computer science out of my endeavors to make operations research more
+valuable as computer science allows me to scale my models in size and wrap
+them into programs that the average person can use. This work represents the
+joining of both of my interests which I have been developing throughout my
+education and serves as the capstone for my collegiate career. I could
+not be more thankful for the people who have helped me get to this point,
+especially my father who instilled in me the work ethic required to amass the
+knowledge I needed to complete this project.</p>
 </div>
 </div>
 
@@ -65,6 +94,7 @@ approaches to smoothing demand with a Quadatric</p>
   <ul>
 <li><a class="reference internal" href="#">Conclusion</a><ul>
 <li><a class="reference internal" href="#possible-improvements">Possible Improvements</a></li>
+<li><a class="reference internal" href="#closing-remarks">Closing Remarks</a></li>
 </ul>
 </li>
 </ul>
@@ -72,13 +102,14 @@ approaches to smoothing demand with a Quadatric</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="reporting.html" title="previous chapter">Reporting</a></li>
   </ul></li>
 </ul>
 </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/formulation.rst.txt"
+      <li><a href="_sources/conclusion.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -104,7 +135,7 @@ approaches to smoothing demand with a Quadatric</p>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
       |
-      <a href="_sources/formulation.rst.txt"
+      <a href="_sources/conclusion.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Main Function &#8212; Logistics Optimization for Regionally Located Equipment  documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Region Variation" href="variation.html" />
+    <link rel="prev" title="Logistics Optimization for Regional Equipment" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="main-function">
+<span id="main"></span><h1>Main Function<a class="headerlink" href="#main-function" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This problem takes a historical approach to determining cost, using past data
+on construction equipment usage to determine if an internal delivery system
+would have been more cost effective than the construction crews moving their
+own equipment. Our data file (outlined below) will tell us the number of sets
+of construction equipment to be moved each day. This allows us to infer the
+number of semi-trucks and equipment haulers needed to move all equipment each
+day, as well how much equipment needed on hand to ensure each construction
+site has their demand for equipment met. Whichever system would have been
+more cost effective for the data we were provided will be chosen as the
+system predicted to be more cost effective in the future.</p>
+<p>To accurately model the cost of the internal delivery system, the size of the
+problem had to be broken into smaller pieces, depending on how much could be
+solved for at one time. I employed such a &#8220;divide and conquer&#8221; approach to
+much of the formulation to help it run faster so longer ranges of time and
+variations in geographical regions could be considered. Being able to
+implement our formulation to multiple variations of the problem was paramount
+to our confidence in our result.</p>
+</div>
+<div class="section" id="inputs">
+<h2>Inputs<a class="headerlink" href="#inputs" title="Permalink to this headline">¶</a></h2>
+<p>Regardless of which variation of the problem is run, there are a few inputs
+to the problem that remain constant. They are as follows:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">the start and end date of the range of time to be considered</p>
+</li>
+<li><p class="first">the rate of travel of our semi-truck and trailer</p>
+</li>
+<li><p class="first">the length of a working day for an equipment hauler</p>
+</li>
+<li><p class="first">the amount of time on average it takes an equipment hauler to unload
+or load equipment from/on his trailer</p>
+</li>
+<li><p class="first">the number of days (time window) in which a construction site is
+elgible for having equipment dropped-off or picked-up before/after
+its start/end date</p>
+</li>
+<li><p class="first">the geographic regions for which our problem will solve</p>
+</li>
+<li><p class="first">the different variations of each region (the differences being how
+many subregions of each region are to be considered)</p>
+</li>
+<li><p class="first">the location of the file that has the data used by our problem. This
+file must include the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the geographical coordinates of each construction site worked on
+in our time range, separated by geographical region</li>
+<li>the number of sets of construction equipment picked-up or dropped-
+off at each site each day, separated by variation of region</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="region">
+<h2>Region<a class="headerlink" href="#region" title="Permalink to this headline">¶</a></h2>
+<p>For each different geographical region we test, we will find the cost of the
+internal delivery system for each different variation of that region. The
+best return on investment of all variations for each region will be the
+variations used for comparing the costs of the internal delivery system to
+the crews delivering their own equipment. Solving for any variation of any
+region is formulated in the same way. A reporting tool will print the results
+(number of semi-trucks, equipment haulers, and extra equipment sets) for
+each variation of region, and the user may then calculate the respective
+costs to determine which are optimal.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Main Function</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#inputs">Inputs</a></li>
+<li><a class="reference internal" href="#region">Region</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Logistics Optimization for Regional Equipment</a></li>
+      <li>Next: <a href="variation.html" title="next chapter">Region Variation</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/main.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Sean Kelley.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/main.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

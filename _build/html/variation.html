@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Region Variation &#8212; Logistics Optimization for Regionally Located Equipment  documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="region-variation">
+<span id="variation"></span><h1>Region Variation<a class="headerlink" href="#region-variation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="importance-of-time-windows">
+<h2>Importance of Time Windows<a class="headerlink" href="#importance-of-time-windows" title="Permalink to this headline">¶</a></h2>
+<p>When calculating the cost of the internal delivery system for each variation
+of region, it is important to find an optimal trade-off between the number of
+semi-trucks and equipment haulers and the number of sets of construction
+equipment needed. For example, prescribing that each construction site must
+have its equipment dropped-off the day before work begins and picked-up the
+day after it ends will result in a couple extremes. It will minimize the
+number of sets of equipment needed to meet all construction sites&#8217; demand for
+equipment (as it minimizes the amount of time equipment sets sit unused
+waiting for pick-up) but will maximize the number of semi-trucks and
+equipment haulers needed as some days may require many more equipment
+movements than others. For that reason, the formulation requires a time
+window (number of days before a construction site begins or after it ends) in
+which a site must have its equipment sets dropped-off or picked-up. Adding
+just a day to the time window (increasing it from 1 day to 2) will
+dramatically decrease the number of semi-trucks and equipment haulers without
+having much effect on the number of sets of equipment.</p>
+</div>
+<div class="section" id="set-up-for-daily-computations">
+<h2>Set-Up for Daily Computations<a class="headerlink" href="#set-up-for-daily-computations" title="Permalink to this headline">¶</a></h2>
+<p>Assigning the time window as optimally as possible, the fist step for each
+variation of region is to smooth the demand for the number of drop-offs and
+pick-ups to be made each day as evenly as possible subject to all drop-offs
+and pick-ups occuring within the time window. (The section &#8220;Smoothing Demand&#8221;
+below will cover this process more in depth.) We then create two tables, the
+first recording how many miles all semi-trucks run each day and the second
+recording how many hours each equipment hauler works each day. We then return
+to the data sheet with the number of equipment sets to be picked-up or
+dropped-off at each site each day for this variation of region (which has now
+been smoothed). For each day in that data sheet between our start and end
+date, we make one list tracking which sites that day need a drop-off or a
+pick-up and a second list tracking what the demand for drop-offs or pick-ups
+at those sites are.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>One drop-off or pick-up (1) is equivalent to one set of equipment (2) as
+that is the maximum capacity for a single truckload (3). These three
+terms will be used interchangeably moving forward.</p>
+<p>Furthermore, the number cooresponding to a construction site&#8217;s demand for
+sets of equipment will be negative if the equipment is being dropped-off
+and positive if the equipment is being picked-up.</p>
+<p class="last">Both of these pieces of information will be useful for interpreting the
+integer program responsible for figuring out how many semi-trucks and
+equipment haulers will be needed each day.</p>
+</div>
+<p>Now knowing which sites need drop-offs and pick-ups, as well as how many each
+of those need, we can now formulate how many semi-trucks and equipment
+haulers we need for each day. Before diving into that, though, let&#8217;s take a
+second to understand what&#8217;s going on in the demand smoothing part I mentioned
+above.</p>
+</div>
+<div class="section" id="smoothing-demand-integer-program">
+<h2>Smoothing Demand: Integer Program<a class="headerlink" href="#smoothing-demand-integer-program" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned previously, the purpose of smoothing our demand for
+equipment drop-offs and pick-ups is to greatly reduce the amount of
+semi-trucks and equipment haulers needed to move all of the equipment while
+slightly increasing the amount of equipment needed on hand.</p>
+<p>We approached
+this part of the problem by formulating an integer program. It is defined by
+a set of job sites (indexed by <span class="math">\(i\)</span>), a set of days (indexed by
+<span class="math">\(l\)</span>), and a set <span class="math">\(S\)</span> of sets of alternative days that
+drop-offs/pick-ups can be made for a site <span class="math">\(i\)</span> with demand on day
+<span class="math">\(l\)</span>. Each site <span class="math">\(i\)</span> has a demand, <span class="math">\(d_{i,l}\)</span>, stating how
+many drop-offs or pick-ups it needs on day <span class="math">\(l\)</span>, with <span class="math">\(d_{i,l}\)</span> &lt;
+0 for drop-offs and <span class="math">\(d_{i,l}\)</span> &gt; 0 for pick-ups. The sets within
+<span class="math">\(S\)</span>, known as <span class="math">\(S_{i,l}\)</span> (indexed by <span class="math">\(l'\)</span>, as we are
+indexing a subset of our set of days), are empty unless <span class="math">\(d_{i,l} \neq\)</span>
+0. In that case <span class="math">\(S_{i,l}\)</span> is the set of the <span class="math">\(n\)</span> days before and
+including the drop-off date or the <span class="math">\(n\)</span> days after and including the
+pick-up date, where <span class="math">\(n\)</span> is the number of days in our time window. (If
+there are fewer than <span class="math">\(n\)</span> days until the start or the end of our time
+range, the set is just the remaining days.)</p>
+<p>We used two variables within this problem definition. The first,
+<span class="math">\(w_{i,l}\)</span>, represents the number of truckloads (equivalently, sets of
+equipment) going to or from site <span class="math">\(i\)</span> on day <span class="math">\(l\)</span>. The second,
+<span class="math">\(z\)</span>, is the largest sum of truckloads going to or from all sites on any
+single day, <span class="math">\(l\)</span>. We can now form the following integer program:</p>
+<div class="math">
+\[ \begin{align}\begin{aligned}&amp;\text{minimize } &amp;z &amp; &amp; &amp; &amp;(1)\\&amp;\text{s.t.:} &amp; &amp; &amp; &amp;\\&amp; \sum_{l' \in S_{i,l}} &amp; w_{i,l'} &amp; = |d_{i,l}| \text{ } &amp; \forall
+&amp; \text{ } i,l \mid S_{i,l} \neq \text{{}} &amp;(2)\\&amp; \sum_{i} &amp; w_{i,l} &amp; \leq z \text{ } &amp; \forall &amp; \text{ } l &amp;(3)\\&amp; &amp; w_{i,l}, z &amp; \in Z \geq 0 \text{ } &amp; \forall &amp; \text{ } i,l &amp; (4)\end{aligned}\end{align} \]</div>
+<p><span class="math">\((1)\)</span> tells us that we are minimizing <span class="math">\(z\)</span>, the maximum number of
+pick-ups and drop-offs to be done on any single day. This is enforced by
+<span class="math">\((3)\)</span>, stating that our objective, <span class="math">\(z\)</span>, must be greater than or
+equal to any single day&#8217;s sum of drop-offs and pick-ups.
+<span class="math">\((2)\)</span> adds that for any site, <span class="math">\(i\)</span>, on any day, <span class="math">\(l\)</span>, with a
+demand for drop-offs or pick-ups, the number of truckloads going to or from
+that site within the time window must equal the number of truckloads
+originally demanded to or from site <span class="math">\(i\)</span> on day <span class="math">\(l\)</span>. Our last
+constraint, <span class="math">\((4)\)</span>, ensures all our variables are non-negative integers.</p>
+<p>Put in plain English, <span class="math">\((2)\)</span> allows us to assign pick-ups and drop-offs
+to different days as long as its sufficiently close to the original day they
+needed done, and <span class="math">\((1)\)</span> and <span class="math">\((3)\)</span> ensure the number of trips being
+made each day are as few as possible. <span class="math">\((4)\)</span> simply prevents any half-
+drop-offs or half-pick-ups from being made.</p>
+</div>
+<div class="section" id="smoothing-demand-improvement-algorithm">
+<h2>Smoothing Demand: Improvement Algorithm<a class="headerlink" href="#smoothing-demand-improvement-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>One issue I saw with the formulation we came up with is that if a couple of
+days were to have a much higher demand for drop-offs and pick-ups than
+all of the others, <span class="math">\((3)\)</span> would not be a tightly enforced
+constraint, and the other days&#8217; demands would not be smoothed effectively. To
+work around this, we took a &#8216;divide and conquer&#8217; approach to our final
+formulation for demand smoothing. Rather than trying to smooth all of our
+input days of data with the integer program in one go, we broke the data set
+into equal sized chunks (periods) and had the integer program solve each
+period individually.</p>
+<p>To further optimize results, we repeated this process for periods with
+lengths varying from a couple days to a couple weeks.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">We picked the periods to be at least a couple of days so at minimum some
+of the day&#8217;s demands in that period could be reassigned. We capped the
+periods&#8217; lengths at a couple weeks, however, because such large demands
+would appear for one day that our integer program would no longer smooth
+very effectively.</p>
+</div>
+<p>After running the integer program over all periods in our data for each
+different period length, we picked the smoothed data we were going to work
+with by whichever period length resulted in the least amount of variability
+over all of its days (thus was the most smooth). Now that we have chosen the
+smoothest data we can for drop-offs and pick-ups to be made each day, we can
+formulate how we&#8217;re going to figure out how many assets (semi-trucks,
+equipment handlers, and equipment sets) we&#8217;re going to need to meet each
+construction site&#8217;s demand.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Region Variation</a><ul>
+<li><a class="reference internal" href="#importance-of-time-windows">Importance of Time Windows</a></li>
+<li><a class="reference internal" href="#set-up-for-daily-computations">Set-Up for Daily Computations</a></li>
+<li><a class="reference internal" href="#smoothing-demand-integer-program">Smoothing Demand: Integer Program</a></li>
+<li><a class="reference internal" href="#smoothing-demand-improvement-algorithm">Smoothing Demand: Improvement Algorithm</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/variation.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Sean Kelley.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/variation.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

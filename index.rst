@@ -3,25 +3,25 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to the Documentation for Logistics Optimization for Regional Equipment!
-===============================================================================
+Logistics Optimization for Regional Equipment
+=============================================
 
-This documentation explains the formulation and implementation for solving
-the Logistics Optimization for Regional Equipment problem. Before explaining
-both of those, however, I would like to take a moment to give a background
-on the problem itself.
-
+This documentation explains the math, algorithms, and computer code used to
+arrive at a solution for how to transport sets of construction equipment.
+Before diving into an explanation on the solution, I'd like to take a moment
+to describe the problem.
 
 This problem concerns a construction company inquiring if it would be more
 profitable to transfer the responsibility of delivering construction
-equipment from the construction crews to an internal delivery service.
-Such a delivery service would consist of semi-trucks and flatbed trailers,
-as well as equipment haulers (truck drivers), and would be responsible for
-moving equipment to construction sites before jobs begin and from them once
+equipment from the construction crews to an internal delivery service for
+each geographical region in which they do business. Such a delivery service
+would consist of semi-trucks and flatbed trailers, as well as equipment
+haulers (truck drivers), and would be responsible for moving equipment to
+construction sites in the region before jobs begin and from them once
 they end. Currently, the construction crews have extra licensing and large
-vehicles only fully utilized when moving equipment to and from the sites on
-the days they begin and end. A comparison of costs will be used to
-determine which is the more effective system.
+vehicles only fully utilized on days they move equipment to and from the
+sites. A comparison of costs can be used to determine which is the more
+effective system.
 
 With the costs of the crews moving the equipment on their own known to the
 construction company already, this work will focus on the calculation of
@@ -29,20 +29,48 @@ costs for the new delivery service, namely:
 
     * the number of semi-trucks and trailers
     * the number of equipment haulers (truck drivers)
-    * the number of additional equipment sets
+    * the number of construction equipment sets
 
-Next, in :ref:`formulation`, I'll discuss the math models and algorithms I
-developed to solve each part of the problem. Following that in
-:ref:`implementation`, I'll discuss the code I wrote to execute each part of
-the formulation.
-        
+Topics
+------
+
+I'll cover a few different topics throughout this documentation in order to
+describe the entire approach to determining if an internal delivery system is
+a more viable option to construction crews transporting their own equipment.
+
+    * :ref:`main` covers the inputs that the code requires to begin
+      calculations. If you're looking for a full understanding of how the
+      math, algorithms, and code interact, start here.
+
+    * :ref:`variation` details the calculations that only need done once
+      for each variation of a geographic region we consider. If you're only
+      interested in the math, read this part and the next.
+
+    * :ref:`daily-routing` explains the data manipulation and calculations that needed
+      solved one day at a time.
+
+    * :ref:`reporting` outlines how all of the data the calculations from the
+      previous two topics come together into one final report that can be
+      used to make a decision on using the internal delivery system
+
+    * In :ref:`conclusion`, I'll give my closing remarks on the project.
+
+I hope you enjoy reading, and thank you for taking the time to check out my
+work!
+
+Sean Kelley
+Industrial Engineer, University of Illinois
 
 Indices
-=======
+-------
 
 .. toctree::
    :maxdepth: 2
 
-   formulation
-   implementation
+   main
+   variation
+   daily-routing
+   reporting
+   conclusion
+
 

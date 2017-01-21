@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Reporting &#8212; Logistics Optimization for Regionally Located Equipment  documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Conclusion" href="conclusion.html" />
+    <link rel="prev" title="Daily Routing" href="day.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="reporting">
+<span id="id1"></span><h1>Reporting<a class="headerlink" href="#reporting" title="Permalink to this headline">¶</a></h1>
+<p>Upon completion of the hauler routing for every day in our data set, we are
+left with three complete pieces of information.</p>
+<blockquote>
+<div><ul class="simple">
+<li>how much demand each site had each day (smoothed)</li>
+<li>how many miles the fleet of haulers worked each day</li>
+<li>how many hours each hauler worked each day</li>
+</ul>
+</div></blockquote>
+<p>All of this information we then compile into a report which can then be used
+to make a calculation as to the cost of this variation&#8217;s of a region delivery
+system.</p>
+<div class="section" id="equipment-hauler-cost">
+<h2>Equipment Hauler Cost<a class="headerlink" href="#equipment-hauler-cost" title="Permalink to this headline">¶</a></h2>
+<p>The first step in the reporting process is to summarize how often each hauler
+is utilized. Each day when we recorded the hours each hauler worked, we
+assigned hours to haulers from greatest to least, so the first hauler got the
+most hours, the second got the second most, etc. By doing this, when we
+average how many hours each hauler works each day and how many days in a year
+each hauler worked, we ensure the fewest amount of haulers do the greatest
+amount of work. Based on how often each hauler is utilized a decision can be
+made as to whether or not that hauler needs hired and his semi needs purchased,
+or if overtime by other haulers can be worked to cover the extra drop-offs
+and pick-ups. Later in the reporting process, this decision can be reinforced
+by graphs mapping out how much each hauler works on each day, telling us
+whether or not such an overtime strategy would be effective in replacing a
+given equipment hauler. With this information we can calculate how many
+haulers and semi-trucks we need to meet our demand.</p>
+</div>
+<div class="section" id="semi-truck-cost">
+<h2>Semi-Truck Cost<a class="headerlink" href="#semi-truck-cost" title="Permalink to this headline">¶</a></h2>
+<p>Next we can induce how often the semi-trucks in our delivery system will need
+replaced, based on how many miles they run each day. If we sum the fleet
+mileage table over all days in our time range, we can use that number to
+forecast when a fleet of semi-trucks will need replaced.</p>
+</div>
+<div class="section" id="equipment-sets-cost">
+<h2>Equipment Sets Cost<a class="headerlink" href="#equipment-sets-cost" title="Permalink to this headline">¶</a></h2>
+<p>One final crucial piece of information has yet to be determined for making
+our cost calculation, and that is how many sets of equipment will be needed
+for this system to work. For each day in our time range, we repeated the
+following process:</p>
+<ol class="arabic simple">
+<li>If a set of equipment is at a site, mark it as in use. If it gets
+picked up from that site later in the day, it is still being used as it
+either goes to another site or spends the day returning to the hub.</li>
+<li>If a site has a demand for equipment to be picked-up, assign that
+number of that site&#8217;s sets of equipment to be free for usage elsewhere.</li>
+<li>If a site has a demand for equipment to be dropped-off, assign that
+number of sets of equipment to that site. This can include
+the sets of equipment that were just released, as haulers can meet one
+site&#8217;s demand for drop-offs by picking-up from a site that released
+equipment on that day.</li>
+<li>If a set of equipment is at a site, mark it as in use. We repeat this
+step to ensure that additional sets of equipment that were brought out
+to job sites, if necessary, are counted as in use.</li>
+</ol>
+<p>Also worth nothing in the process, the sets of equipment are indexed in
+increasing order, and assignment is made to the set of available equipment
+with the lowest index, ensuring we use the smallest number of equipment sets
+for the majority of the work.</p>
+<p>From here we make two graphs to illustrate the machine set usage. The first
+graph depicts how often each set of equipment gets used, helping us decide
+whether or not a given set of equipment should be bought or rented. The
+second graph shows us how much additional utility each set of equipment adds,
+further detailing how many equipment sets are needed to meet the demand. With
+this information, we can now infer how many sets of construction equipment
+are needed.</p>
+</div>
+<div class="section" id="decision">
+<h2>Decision<a class="headerlink" href="#decision" title="Permalink to this headline">¶</a></h2>
+<p>At this point, all of the above information is compiled into a single report
+corresponding to the given variation of a region, and can be used to calculate
+the cost of this variation&#8217;s delivery system. Providing that there exists at
+least one variation in each region that costs less than the current state of
+that variation, it would be advised that the construction company change
+their equipment transportation method to the internal delivery system.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Reporting</a><ul>
+<li><a class="reference internal" href="#equipment-hauler-cost">Equipment Hauler Cost</a></li>
+<li><a class="reference internal" href="#semi-truck-cost">Semi-Truck Cost</a></li>
+<li><a class="reference internal" href="#equipment-sets-cost">Equipment Sets Cost</a></li>
+<li><a class="reference internal" href="#decision">Decision</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="day.html" title="previous chapter">Daily Routing</a></li>
+      <li>Next: <a href="conclusion.html" title="next chapter">Conclusion</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/reporting.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Sean Kelley.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/reporting.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
