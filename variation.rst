@@ -46,16 +46,7 @@ at those sites are.
     that is the maximum capacity for a single truckload (3). These three
     terms will be used interchangeably moving forward.
 
-    Furthermore, the number cooresponding to a construction site's demand for
-    sets of equipment will be negative if the equipment is being dropped-off
-    and positive if the equipment is being picked-up.
-
-    Both of these pieces of information will be useful for interpreting the
-    integer program responsible for figuring out how many semi-trucks and
-    equipment haulers will be needed each day.
-
-
-Now knowing which sites need drop-offs and pick-ups, as well as how many each
+Knowing which sites need drop-offs and pick-ups, as well as how many each
 of those need, we can now formulate how many semi-trucks and equipment
 haulers we need for each day. Before diving into that, though, let's take a
 second to understand what's going on in the demand smoothing part I mentioned
@@ -85,7 +76,7 @@ pick-up date, where :math:`n` is the number of days in our time window. (If
 there are fewer than :math:`n` days until the start or the end of our time
 range, the set is just the remaining days.)
 
-We used two variables within this problem definition. The first,
+We used two variables in this problem. The first,
 :math:`w_{i,l}`, represents the number of truckloads (equivalently, sets of
 equipment) going to or from site :math:`i` on day :math:`l`. The second,
 :math:`z`, is the largest sum of truckloads going to or from all sites on any
@@ -126,9 +117,9 @@ Smoothing Demand: Improvement Algorithm
 One issue I saw with the formulation we came up with is that if a couple of
 days were to have a much higher demand for drop-offs and pick-ups than
 all of the others, :math:`(3)` would not be a tightly enforced
-constraint, and the other days' demands would not be smoothed effectively. To
-work around this, we took a 'divide and conquer' approach to our final
-formulation for demand smoothing. Rather than trying to smooth all of our
+constraint on many of the other days, and their demands would not be smoothed
+effectively. To work around this, we took a 'divide and conquer' approach to
+our final formulation for demand smoothing. Rather than trying to smooth all of our
 input days of data with the integer program in one go, we broke the data set
 into equal sized chunks (periods) and had the integer program solve each
 period individually.
@@ -153,3 +144,16 @@ formulate how we're going to figure out how many assets (semi-trucks,
 equipment handlers, and equipment sets) we're going to need to meet each
 construction site's demand.
 
+With the number of drop-offs and pick-ups to be made to each site each day
+now smoothed and a way to record our results created, we can move on to
+calculating the routes that the fleet of haulers must make each day.
+
+Continue to :ref:`daily-routing`
+
+Indices
+-------
+
+.. toctree::
+   :maxdepth: 1
+
+   daily-routing

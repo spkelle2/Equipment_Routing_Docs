@@ -82,30 +82,29 @@ equivalently, the sites, <span class="math">\(i\)</span>, for which <span class=
 a given day. This list also includes the hubs, where the equipment
 haulers start and end their day. They&#8217;re represented as different
 numbers but can be same physical location. This list
-has length <span class="math">\(n+1\)</span>. The hubs are <span class="math">\(locations_{0}\)</span> and
-<span class="math">\(locations_{n+1}\)</span>.</dd>
+has length <span class="math">\(n+1\)</span>. The hubs are <span class="math">\(\text{locations}_{0}\)</span> and
+<span class="math">\(\text{locations}_{n+1}\)</span>.</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt>customers (indexed by <span class="math">\(i\)</span>)</dt>
 <dd>A list of only just the sites with demand for drop-offs and pick-ups
-on a given day. Has length <span class="math">\(n-1\)</span>.</dd>
+on a given day. This list has length <span class="math">\(n-1\)</span>.</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt>route constraints, <span class="math">\(D_{i,j}\)</span></dt>
 <dd>A matrix of the number of times the route from site, <span class="math">\(i\)</span>, to
 site, <span class="math">\(j\)</span>, can be traveled, indexed in the same order as the
-locations parameter. Forces the model to adhere to real
-world constraints, like an equipment hauler not being able to drop
-equipment off at a site, <span class="math">\(j\)</span>, if he just came from a site,
-<span class="math">\(i\)</span>, where he also dropped equipment off. (Equipment always
-stays in a set and takes the full capacity of a semi-truck; therefore,
-this equipment hauler would have no equipment to drop off.) This will
-force an equipment hauler to return to the hub (where he starts and
-ends his day) to unload or reload his semi-truck when he can no
-longer meet the demand of any remaining sites with his semi-truck in
-its current state (either with an equipment set or empty).</dd>
+locations parameter. Forces the model to adhere to these real world
+constraints:<ul class="last">
+<li>A hauler must alternate between dropping-off equipment and picking-
+up equipment.</li>
+<li>A hauler can only use the demand from one site to satisfy an
+opposite demand at another if both demands have not already been
+satisfied.</li>
+</ul>
+</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
@@ -119,7 +118,7 @@ geographical coordinates listed for each site.</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>subsets, <span class="math">\(S_{m}\)</span> (indexed by i&#8217;)</dt>
+<dt>subsets, <span class="math">\(S_{m}\)</span> (indexed by i&#8217;, a subset of a sites)</dt>
 <dd>A list of the even-sized subsets, <span class="math">\(m\)</span>, of sites with demand on a
 given day, necessary for forcing continuity in our equipment haulers&#8217;
 routes.</dd>
@@ -203,9 +202,21 @@ to be used on a given day. Since the purpose of the problem is to use as few
 assets as possible given a list of drop-offs and pick-ups to make each day,
 we start by running the model with as few haulers as possible, one, and rerun
 it, adding one hauler per rerun, until our model is feasible. Once we achieved
-feasibility, we recorded the total number of miles the haulers drove that day
-and how many hours each of the consequently worked into the tables created
-before running the first day&#8217;s models.</p>
+feasibility, we recorded in the tables created before running the first day&#8217;s
+models the total number of miles the haulers drove this given day and how
+many hours each of them consequently worked.</p>
+<p>Once this process has been repeated for each day given in our range of time,
+we can then summarize the data we&#8217;ve recorded to understand the costs
+associated with this variation&#8217;s of region delivery system.</p>
+<p>Continue on to <a class="reference internal" href="reporting.html#reporting"><span class="std std-ref">Reporting</span></a></p>
+</div>
+<div class="section" id="indices">
+<h2>Indices<a class="headerlink" href="#indices" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="reporting.html">Reporting</a></li>
+</ul>
+</div>
 </div>
 </div>
 
@@ -221,6 +232,7 @@ before running the first day&#8217;s models.</p>
 <li><a class="reference internal" href="#creating-parameters">Creating Parameters</a></li>
 <li><a class="reference internal" href="#developing-the-model">Developing the Model</a></li>
 <li><a class="reference internal" href="#running-the-model">Running the Model</a></li>
+<li><a class="reference internal" href="#indices">Indices</a></li>
 </ul>
 </li>
 </ul>
@@ -228,8 +240,12 @@ before running the first day&#8217;s models.</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="main.html">Main Function</a><ul>
+  <li><a href="variation.html">Region Variation</a><ul>
       <li>Previous: <a href="variation.html" title="previous chapter">Region Variation</a></li>
       <li>Next: <a href="reporting.html" title="next chapter">Reporting</a></li>
+  </ul></li>
+  </ul></li>
   </ul></li>
 </ul>
 </div>

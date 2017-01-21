@@ -6,8 +6,8 @@ Conclusion
 Possible Improvements
 ---------------------
 
-Looking back on the work I did, there are two avenues I wish I would have had
-the time to explore that I think would have improved our result.
+Looking back on the work I did, there are a couple avenues I wish I would
+have had the time to explore that I think would have improved our result.
 
 The first had to do with the smoothing integer program. The goal of the model
 was to minimize the variation amongst the days. Given that variation is a
@@ -27,8 +27,17 @@ model the problem in the same manner but without the exponential constraints
 would be necessary for scaling the number of locations for which we could
 solve at one time.
 
-Closing Remarks
----------------
+Lastly, I think the reusability of the project could have benefitted from
+having a more automated way of generating data for the model to use. Due to
+time constraints, the best solution we could come up with was putting data
+directly into separate spreadsheets, but I think that could have been
+accomplished with much less difficulty on the end user if a list of sites and
+their dates of actitity were input instead. That way, the data on locations
+and demand for drop-offs and pick-ups for each variation could have just been
+mined automatically, saving time and stress on the user.
+
+Biography
+---------
 
 A brief bit about me. At time of writing, I'm a studying Industrial Engineer
 at the University of Illinois. My interest areas lie in Operations Research
@@ -37,9 +46,21 @@ modeling mathematically the world around me and having a means of making a
 decision on what to do with whatever I have modeled. I developed an interest
 in computer science out of my endeavors to make operations research more
 valuable as computer science allows me to scale my models in size and wrap
-them into programs that the average person can use. This work represents the
-joining of both of my interests which I have been developing throughout my
-education and serves as the capstone for my collegiate career. I could
-not be more thankful for the people who have helped me get to this point,
-especially my father who instilled in me the work ethic required to amass the
-knowledge I needed to complete this project.
+them into programs that the average person can use.
+
+This work represents the joining of both of my interests which I have been
+developing throughout my education and serves as the capstone for my
+collegiate career. I could not be more thankful for the people who have
+helped me get to this point, especially my father who instilled in me the
+work ethic required to amass the knowledge I needed to complete this project.
+
+Moving forward, I'd like to continue developing solutions, and eventually
+products, like this one that will leverage optimization methods for helping
+users make decisions or even make decisions for them. For any questions or
+inquiries, please feel free to reach me at the contact information below.
+
+Thank you for taking the time to read my work.
+
+Sean Kelley
+217-722-2228
+seanpkelley94@gmail.com

@@ -7,9 +7,8 @@ Logistics Optimization for Regional Equipment
 =============================================
 
 This documentation explains the math, algorithms, and computer code used to
-arrive at a solution for how to transport sets of construction equipment.
-Before diving into an explanation on the solution, I'd like to take a moment
-to describe the problem.
+arrive at a solution for how to transport sets of construction equipment kept
+in various geographical regions for a national construction company.
 
 This problem concerns a construction company inquiring if it would be more
 profitable to transfer the responsibility of delivering construction
@@ -46,12 +45,13 @@ a more viable option to construction crews transporting their own equipment.
       for each variation of a geographic region we consider. If you're only
       interested in the math, read this part and the next.
 
-    * :ref:`daily-routing` explains the data manipulation and calculations that needed
-      solved one day at a time.
+    * :ref:`daily-routing` explains the data manipulation and calculations
+      that require being solved one day at a time, for each variation of
+      region we consider.
 
     * :ref:`reporting` outlines how all of the data the calculations from the
       previous two topics come together into one final report that can be
-      used to make a decision on using the internal delivery system
+      used to make a decision on using the internal delivery system.
 
     * In :ref:`conclusion`, I'll give my closing remarks on the project.
 
@@ -59,6 +59,7 @@ I hope you enjoy reading, and thank you for taking the time to check out my
 work!
 
 Sean Kelley
+
 Industrial Engineer, University of Illinois
 
 Indices

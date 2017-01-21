@@ -28,7 +28,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Conclusion" href="conclusion.html" />
-    <link rel="prev" title="Daily Routing" href="day.html" />
+    <link rel="prev" title="Daily Routing" href="daily-routing.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -56,8 +56,7 @@ left with three complete pieces of information.</p>
 </ul>
 </div></blockquote>
 <p>All of this information we then compile into a report which can then be used
-to make a calculation as to the cost of this variation&#8217;s of a region delivery
-system.</p>
+to make a calculation as to the cost of this variation&#8217;s delivery system.</p>
 <div class="section" id="equipment-hauler-cost">
 <h2>Equipment Hauler Cost<a class="headerlink" href="#equipment-hauler-cost" title="Permalink to this headline">¶</a></h2>
 <p>The first step in the reporting process is to summarize how often each hauler
@@ -74,13 +73,26 @@ by graphs mapping out how much each hauler works on each day, telling us
 whether or not such an overtime strategy would be effective in replacing a
 given equipment hauler. With this information we can calculate how many
 haulers and semi-trucks we need to meet our demand.</p>
+<p>For example, the image below illustrates what the results of this summary
+might look like. It&#8217;s pretty easy to tell that the last three haulers
+probably do not need hired. The second image typifies the graph that maps
+how much each hauler works each day, and supports the last three not being
+hired as <span class="math">\(4\)</span>&#8216;s hours are pretty spread out, could be covered by another
+hauler working extra, and are greater than <span class="math">\(5\)</span>&#8216;s and <span class="math">\(6\)</span>&#8216;s.</p>
+<img alt="_images/hauler_summary.png" src="_images/hauler_summary.png" />
+<img alt="_images/individual_hauler.png" src="_images/individual_hauler.png" />
 </div>
 <div class="section" id="semi-truck-cost">
 <h2>Semi-Truck Cost<a class="headerlink" href="#semi-truck-cost" title="Permalink to this headline">¶</a></h2>
-<p>Next we can induce how often the semi-trucks in our delivery system will need
-replaced, based on how many miles they run each day. If we sum the fleet
-mileage table over all days in our time range, we can use that number to
-forecast when a fleet of semi-trucks will need replaced.</p>
+<p>Next we can induce how much needs spent on equiping our haulers with semi-
+trucks. We already know how many trucks will be needed (as we would like one
+for each hauler), but another part of the cost comes from how often we have
+to replace the semi-trucks based on how many miles they run per period of
+time. This part of the calculation can be made by summing the total number
+of miles the fleet runs each day for our time period. This number then can be
+used to forecast how many times semi-trucks would need to be repurchased over
+a long range of time. An example of this number appears at the top of the
+first image.</p>
 </div>
 <div class="section" id="equipment-sets-cost">
 <h2>Equipment Sets Cost<a class="headerlink" href="#equipment-sets-cost" title="Permalink to this headline">¶</a></h2>
@@ -103,7 +115,7 @@ equipment on that day.</li>
 step to ensure that additional sets of equipment that were brought out
 to job sites, if necessary, are counted as in use.</li>
 </ol>
-<p>Also worth nothing in the process, the sets of equipment are indexed in
+<p>Also worth noting in the process, the sets of equipment are indexed in
 increasing order, and assignment is made to the set of available equipment
 with the lowest index, ensuring we use the smallest number of equipment sets
 for the majority of the work.</p>
@@ -113,16 +125,39 @@ whether or not a given set of equipment should be bought or rented. The
 second graph shows us how much additional utility each set of equipment adds,
 further detailing how many equipment sets are needed to meet the demand. With
 this information, we can now infer how many sets of construction equipment
-are needed.</p>
+are needed as well as how much each set will cost (difference in buying vs.
+paying per use with renting). An example of the first graphic is shown below.</p>
+<img alt="_images/equipment_utilization.png" src="_images/equipment_utilization.png" />
 </div>
 <div class="section" id="decision">
 <h2>Decision<a class="headerlink" href="#decision" title="Permalink to this headline">¶</a></h2>
 <p>At this point, all of the above information is compiled into a single report
 corresponding to the given variation of a region, and can be used to calculate
-the cost of this variation&#8217;s delivery system. Providing that there exists at
-least one variation in each region that costs less than the current state of
-that variation, it would be advised that the construction company change
-their equipment transportation method to the internal delivery system.</p>
+the cost of this variation&#8217;s delivery system. For an example of what a final,
+compiled report looks like, I invite you to download <a class="reference download internal" href="_downloads/morton_base_report.pdf" download=""><code class="xref download docutils literal"><span class="pre">this</span> <span class="pre">pdf</span></code></a>. There are two things I&#8217;d like to point out at this
+time about making the calculation on total cost. The graphs above and in the
+report give no recommendation on how many assets to buy, as it was preferred
+by the construction company to interpret themselves. There is also no unit
+cost listed for any of the assets as the company asked that the finances of
+their potential investments be kept private. However, the report that the
+code saves at the end, like the one available to download, can be used for
+figuring out how many of each asset is necessary for a delivery system and,
+with one&#8217;s own financial assumptions, an estimation on cost can be made.</p>
+<p>Providing that there exists at least one variation in each region that costs
+less than the current process of transporting equipment sets, it would be
+advised that the construction company change their equipment transportation
+method to the internal delivery system.</p>
+<p>With a full means now of understanding how a decision can be made, I invite
+you to look at my closing remarks on the project.</p>
+<p>Continue to <a class="reference internal" href="conclusion.html#conclusion"><span class="std std-ref">Conclusion</span></a></p>
+</div>
+<div class="section" id="indices">
+<h2>Indices<a class="headerlink" href="#indices" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="conclusion.html">Conclusion</a></li>
+</ul>
+</div>
 </div>
 </div>
 
@@ -139,6 +174,7 @@ their equipment transportation method to the internal delivery system.</p>
 <li><a class="reference internal" href="#semi-truck-cost">Semi-Truck Cost</a></li>
 <li><a class="reference internal" href="#equipment-sets-cost">Equipment Sets Cost</a></li>
 <li><a class="reference internal" href="#decision">Decision</a></li>
+<li><a class="reference internal" href="#indices">Indices</a></li>
 </ul>
 </li>
 </ul>
@@ -146,8 +182,14 @@ their equipment transportation method to the internal delivery system.</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="day.html" title="previous chapter">Daily Routing</a></li>
+  <li><a href="main.html">Main Function</a><ul>
+  <li><a href="variation.html">Region Variation</a><ul>
+  <li><a href="daily-routing.html">Daily Routing</a><ul>
+      <li>Previous: <a href="daily-routing.html" title="previous chapter">Daily Routing</a></li>
       <li>Next: <a href="conclusion.html" title="next chapter">Conclusion</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
   </ul></li>
 </ul>
 </div>

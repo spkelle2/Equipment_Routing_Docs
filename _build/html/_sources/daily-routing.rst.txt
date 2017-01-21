@@ -37,27 +37,26 @@ able to solve. They are the following:
         a given day. This list also includes the hubs, where the equipment
         haulers start and end their day. They're represented as different
         numbers but can be same physical location. This list
-        has length :math:`n+1`. The hubs are :math:`locations_{0}` and
-        :math:`locations_{n+1}`.
+        has length :math:`n+1`. The hubs are :math:`\text{locations}_{0}` and
+        :math:`\text{locations}_{n+1}`.
 
     * customers (indexed by :math:`i`)
         A list of only just the sites with demand for drop-offs and pick-ups
-        on a given day. Has length :math:`n-1`.
+        on a given day. This list has length :math:`n-1`.
 
     * route constraints, :math:`D_{i,j}`
         A matrix of the number of times the route from site, :math:`i`, to
         site, :math:`j`, can be traveled, indexed in the same order as the
-        locations parameter. Forces the model to adhere to real
-        world constraints, like an equipment hauler not being able to drop
-        equipment off at a site, :math:`j`, if he just came from a site,
-        :math:`i`, where he also dropped equipment off. (Equipment always
-        stays in a set and takes the full capacity of a semi-truck; therefore,
-        this equipment hauler would have no equipment to drop off.) This will
-        force an equipment hauler to return to the hub (where he starts and
-        ends his day) to unload or reload his semi-truck when he can no
-        longer meet the demand of any remaining sites with his semi-truck in
-        its current state (either with an equipment set or empty).
+        locations parameter. Forces the model to adhere to these real world
+        constraints:
 
+        * A hauler must alternate between dropping-off equipment and picking-
+          up equipment.
+
+        * A hauler can only use the demand from one site to satisfy an
+          opposite demand at another if both demands have not already been
+          satisfied.   
+      
     * travel, :math:`t_{i,j}`
         A matrix stating how many miles apart a site, :math:`i`, is from a
         site, :math:`j`, indexed in the same order as the locations list.
@@ -66,7 +65,7 @@ able to solve. They are the following:
         distances are calculated by converting the differences in
         geographical coordinates listed for each site.
 
-    * subsets, :math:`S_{m}` (indexed by i')
+    * subsets, :math:`S_{m}` (indexed by i', a subset of a sites)
         A list of the even-sized subsets, :math:`m`, of sites with demand on a
         given day, necessary for forcing continuity in our equipment haulers'
         routes.
@@ -170,7 +169,21 @@ to be used on a given day. Since the purpose of the problem is to use as few
 assets as possible given a list of drop-offs and pick-ups to make each day,
 we start by running the model with as few haulers as possible, one, and rerun
 it, adding one hauler per rerun, until our model is feasible. Once we achieved
-feasibility, we recorded the total number of miles the haulers drove that day
-and how many hours each of the consequently worked into the tables created
-before running the first day's models.
+feasibility, we recorded in the tables created before running the first day's
+models the total number of miles the haulers drove this given day and how
+many hours each of them consequently worked.
+
+Once this process has been repeated for each day given in our range of time,
+we can then summarize the data we've recorded to understand the costs
+associated with this variation's of region delivery system.
+
+Continue on to :ref:`reporting`
+
+Indices
+-------
+
+.. toctree::
+    :maxdepth: 1
+
+    reporting
 

@@ -46,9 +46,8 @@
   <div class="section" id="logistics-optimization-for-regional-equipment">
 <h1>Logistics Optimization for Regional Equipment<a class="headerlink" href="#logistics-optimization-for-regional-equipment" title="Permalink to this headline">¶</a></h1>
 <p>This documentation explains the math, algorithms, and computer code used to
-arrive at a solution for how to transport sets of construction equipment.
-Before diving into an explanation on the solution, I&#8217;d like to take a moment
-to describe the problem.</p>
+arrive at a solution for how to transport sets of construction equipment kept
+in various geographical regions for a national construction company.</p>
 <p>This problem concerns a construction company inquiring if it would be more
 profitable to transfer the responsibility of delivering construction
 equipment from the construction crews to an internal delivery service for
@@ -83,18 +82,19 @@ math, algorithms, and code interact, start here.</li>
 <li><a class="reference internal" href="variation.html#variation"><span class="std std-ref">Region Variation</span></a> details the calculations that only need done once
 for each variation of a geographic region we consider. If you&#8217;re only
 interested in the math, read this part and the next.</li>
-<li><a class="reference internal" href="daily-routing.html#daily-routing"><span class="std std-ref">Daily Routing</span></a> explains the data manipulation and calculations that needed
-solved one day at a time.</li>
+<li><a class="reference internal" href="daily-routing.html#daily-routing"><span class="std std-ref">Daily Routing</span></a> explains the data manipulation and calculations
+that require being solved one day at a time, for each variation of
+region we consider.</li>
 <li><a class="reference internal" href="reporting.html#reporting"><span class="std std-ref">Reporting</span></a> outlines how all of the data the calculations from the
 previous two topics come together into one final report that can be
-used to make a decision on using the internal delivery system</li>
+used to make a decision on using the internal delivery system.</li>
 <li>In <a class="reference internal" href="conclusion.html#conclusion"><span class="std std-ref">Conclusion</span></a>, I&#8217;ll give my closing remarks on the project.</li>
 </ul>
 </div></blockquote>
 <p>I hope you enjoy reading, and thank you for taking the time to check out my
 work!</p>
-<p>Sean Kelley
-Industrial Engineer, University of Illinois</p>
+<p>Sean Kelley</p>
+<p>Industrial Engineer, University of Illinois</p>
 </div>
 <div class="section" id="indices">
 <h2>Indices<a class="headerlink" href="#indices" title="Permalink to this headline">¶</a></h2>
@@ -104,6 +104,7 @@ Industrial Engineer, University of Illinois</p>
 <li class="toctree-l2"><a class="reference internal" href="main.html#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="main.html#inputs">Inputs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="main.html#region">Region</a></li>
+<li class="toctree-l2"><a class="reference internal" href="main.html#indices">Indices</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="variation.html">Region Variation</a><ul>
@@ -111,12 +112,14 @@ Industrial Engineer, University of Illinois</p>
 <li class="toctree-l2"><a class="reference internal" href="variation.html#set-up-for-daily-computations">Set-Up for Daily Computations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="variation.html#smoothing-demand-integer-program">Smoothing Demand: Integer Program</a></li>
 <li class="toctree-l2"><a class="reference internal" href="variation.html#smoothing-demand-improvement-algorithm">Smoothing Demand: Improvement Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variation.html#indices">Indices</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="daily-routing.html">Daily Routing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="daily-routing.html#creating-parameters">Creating Parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="daily-routing.html#developing-the-model">Developing the Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="daily-routing.html#running-the-model">Running the Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="daily-routing.html#indices">Indices</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="reporting.html">Reporting</a><ul>
@@ -124,11 +127,12 @@ Industrial Engineer, University of Illinois</p>
 <li class="toctree-l2"><a class="reference internal" href="reporting.html#semi-truck-cost">Semi-Truck Cost</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reporting.html#equipment-sets-cost">Equipment Sets Cost</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reporting.html#decision">Decision</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reporting.html#indices">Indices</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="conclusion.html">Conclusion</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="conclusion.html#possible-improvements">Possible Improvements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="conclusion.html#closing-remarks">Closing Remarks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conclusion.html#biography">Biography</a></li>
 </ul>
 </li>
 </ul>
