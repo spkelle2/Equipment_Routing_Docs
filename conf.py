@@ -1,3 +1,4 @@
+import sys
 # -*- coding: utf-8 -*-
 #
 # Logistics Optimization for Regionally Located Equipment documentation build configuration file, created by
@@ -30,7 +31,9 @@
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
+sys.path.insert(0,'/mnt/c/Users/Sean/Documents/School/Senior Year/GE 494/scripts')
 extensions = ['sphinx.ext.autodoc',
+    'sphinx.ext.napoleon',
     'sphinx.ext.mathjax',
     'sphinx.ext.githubpages']
 

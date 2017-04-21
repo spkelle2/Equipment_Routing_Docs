@@ -89,7 +89,7 @@ single day, :math:`l`. We can now form the following integer program:
     &\text{s.t.:} & & & &
 
     & \sum_{l' \in S_{i,l}} & w_{i,l'} & = |d_{i,l}| \text{ } & \forall
-    & \text{ } i,l \mid S_{i,l} \neq \text{{}} &(2)
+    & \text{ } i,l : S_{i,l} \neq \text{{}} &(2)
 
     & \sum_{i} & w_{i,l} & \leq z \text{ } & \forall & \text{ } l &(3)
 
@@ -149,6 +149,9 @@ now smoothed and a way to record our results created, we can move on to
 calculating the routes that the fleet of haulers must make each day.
 
 Continue to :ref:`daily-routing`
+
+.. autofunction:: iterate.solve_variation
+
 
 Indices
 -------

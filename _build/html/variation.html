@@ -120,7 +120,7 @@ equipment) going to or from site <span class="math">\(i\)</span> on day <span cl
 single day, <span class="math">\(l\)</span>. We can now form the following integer program:</p>
 <div class="math">
 \[ \begin{align}\begin{aligned}&amp;\text{minimize } &amp;z &amp; &amp; &amp; &amp;(1)\\&amp;\text{s.t.:} &amp; &amp; &amp; &amp;\\&amp; \sum_{l' \in S_{i,l}} &amp; w_{i,l'} &amp; = |d_{i,l}| \text{ } &amp; \forall
-&amp; \text{ } i,l \mid S_{i,l} \neq \text{{}} &amp;(2)\\&amp; \sum_{i} &amp; w_{i,l} &amp; \leq z \text{ } &amp; \forall &amp; \text{ } l &amp;(3)\\&amp; &amp; w_{i,l}, z &amp; \in Z \geq 0 \text{ } &amp; \forall &amp; \text{ } i,l &amp; (4)\end{aligned}\end{align} \]</div>
+&amp; \text{ } i,l : S_{i,l} \neq \text{{}} &amp;(2)\\&amp; \sum_{i} &amp; w_{i,l} &amp; \leq z \text{ } &amp; \forall &amp; \text{ } l &amp;(3)\\&amp; &amp; w_{i,l}, z &amp; \in Z \geq 0 \text{ } &amp; \forall &amp; \text{ } i,l &amp; (4)\end{aligned}\end{align} \]</div>
 <p><span class="math">\((1)\)</span> tells us that we are minimizing <span class="math">\(z\)</span>, the maximum number of
 pick-ups and drop-offs to be done on any single day. This is enforced by
 <span class="math">\((3)\)</span>, stating that our objective, <span class="math">\(z\)</span>, must be greater than or
@@ -169,6 +169,28 @@ construction site&#8217;s demand.</p>
 now smoothed and a way to record our results created, we can move on to
 calculating the routes that the fleet of haulers must make each day.</p>
 <p>Continue to <a class="reference internal" href="daily-routing.html#daily-routing"><span class="std std-ref">Daily Routing</span></a></p>
+<dl class="function">
+<dt id="iterate.solve_variation">
+<code class="descclassname">iterate.</code><code class="descname">solve_variation</code><span class="sig-paren">(</span><em>fixed_parameters</em>, <em>region</em>, <em>variation</em><span class="sig-paren">)</span><a class="headerlink" href="#iterate.solve_variation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find truck, hauler, and equipment usages for all days in our range.</p>
+<p>Finds and smoothes delivery demand for all days. Determines day by day
+usage of all assets. Creates report detailing usage over whole range.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fixed_parameters</strong> (<em>dict</em>) &#8211; Parameters that are constant for any variation and region (as defined
+in the main function)</li>
+<li><strong>region</strong> (<em>str</em>) &#8211; The geographical region for which we&#8217;re finding usage stats</li>
+<li><strong>variation</strong> (<em>str</em>) &#8211; The variation of the geographical region for which we solve</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 <div class="section" id="indices">
 <h2>Indices<a class="headerlink" href="#indices" title="Permalink to this headline">¶</a></h2>

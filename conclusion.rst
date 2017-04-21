@@ -52,15 +52,17 @@ This work represents the joining of both of my interests which I have been
 developing throughout my education and serves as the capstone for my
 collegiate career. I could not be more thankful for the people who have
 helped me get to this point, especially my father who instilled in me the
-work ethic required to amass the knowledge I needed to complete this project.
+work ethic required to gain the experience I needed to complete this project.
 
 Moving forward, I'd like to continue developing solutions, and eventually
-products, like this one that will leverage optimization methods for helping
-users make decisions or even make decisions for them. For any questions or
-inquiries, please feel free to reach me at the contact information below.
+products, like this one that will leverage optimization methods for providing
+users with a service. For any questions or inquiries, please feel free to
+reach me at the contact information below.
 
 Thank you for taking the time to read my work.
 
 Sean Kelley
+
 217-722-2228
+
 seanpkelley94@gmail.com

@@ -161,8 +161,8 @@ equipment hauler routing for each day, we can define our model.</p>
 &amp;(4)\\&amp;\sum_{i} \sum_{j} &amp; &amp;x_{i,j,k}(h + \frac{t_{i,j}}{r}) &amp; &amp;\leq l + h &amp;
 &amp;\forall \text{ } k \in \text{haulers} &amp;(5)\\&amp;\sum_{j} \sum_{k} &amp; &amp;x_{i,j,k} &amp; &amp;= \mid d_{i} \mid &amp; &amp;\forall \text{ } i
 \in \text{customers} &amp;(6)\\&amp;\sum_{k} &amp; &amp;x_{i,j,k} &amp; &amp;\leq D_{i,j} &amp; &amp;\forall \text{ } i,j \in
-\text{locations} &amp;(7)\\&amp;\sum_{i' \in S_{m}} \sum_{j' \in S_{m}} &amp; &amp;x_{i,j,k} &amp; &amp;\leq My_{m,k} &amp;
-&amp;\forall \text{ } k \in \text{haulers}, m \in \text{subsets} &amp;(8)\\&amp;\sum_{i' \in S_{m}} \sum_{j \backslash S_{m}} &amp; &amp;x_{i,j,k} &amp; &amp;\geq
+\text{locations} &amp;(7)\\&amp;\sum_{i' \in S_{m}} \sum_{j' \in S_{m}} &amp; &amp;x_{i',j',k} &amp; &amp;\leq M(y_{m,k}) &amp;
+&amp;\forall \text{ } k \in \text{haulers}, m \in \text{subsets} &amp;(8)\\&amp;\sum_{i' \in S_{m}} \sum_{j \backslash S_{m}} &amp; &amp;x_{i',j,k} &amp; &amp;\geq
 y_{m,k} &amp; &amp;\forall \text{ } k \in \text{haulers}, m \in \text{subsets} &amp;(9)\\&amp; &amp; &amp;x_{i,j,k} &amp; &amp;\in Z \geq 0 &amp; &amp;\forall \text{ } i,j \in \text{locations},
 k \in \text{haulers} &amp;(10)\\&amp; &amp; &amp;y_{m,k} &amp; &amp;\in \{0,1\} &amp; &amp;\forall \text{ } k \in \text{haulers}, m
 \in \text{subsets} &amp;(11)\end{aligned}\end{align} \]</div>

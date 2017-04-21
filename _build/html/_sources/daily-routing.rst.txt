@@ -120,10 +120,10 @@ equipment hauler routing for each day, we can define our model.
    &\sum_{k} & &x_{i,j,k} & &\leq D_{i,j} & &\forall \text{ } i,j \in
    \text{locations} &(7)
 
-   &\sum_{i' \in S_{m}} \sum_{j' \in S_{m}} & &x_{i,j,k} & &\leq My_{m,k} &
+   &\sum_{i' \in S_{m}} \sum_{j' \in S_{m}} & &x_{i',j',k} & &\leq M(y_{m,k}) &
    &\forall \text{ } k \in \text{haulers}, m \in \text{subsets} &(8)
 
-   &\sum_{i' \in S_{m}} \sum_{j \backslash S_{m}} & &x_{i,j,k} & &\geq
+   &\sum_{i' \in S_{m}} \sum_{j \backslash S_{m}} & &x_{i',j,k} & &\geq
    y_{m,k} & &\forall \text{ } k \in \text{haulers}, m \in \text{subsets} &(9)
 
    & & &x_{i,j,k} & &\in Z \geq 0 & &\forall \text{ } i,j \in \text{locations},
