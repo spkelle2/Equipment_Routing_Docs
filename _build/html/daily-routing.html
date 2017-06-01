@@ -111,7 +111,7 @@ satisfied.</li>
 <dt>travel, <span class="math">\(t_{i,j}\)</span></dt>
 <dd>A matrix stating how many miles apart a site, <span class="math">\(i\)</span>, is from a
 site, <span class="math">\(j\)</span>, indexed in the same order as the locations list.
-The sites represented in this matrix are only those
+The sites represented in this matrix are only the hubs and those
 which have a demand for drop-offs or pick-ups on this day, and the
 distances are calculated by converting the differences in
 geographical coordinates listed for each site.</dd>
@@ -179,7 +179,7 @@ all driving and unloading/loading (un/loading) of semi-trucks must be less
 than the length of the allowable work day. We then added the time of an extra
 un/loading to the workable day to reflect that on average, a semi-truck will
 not need un/loading at both the start and end of its day. <span class="math">\((6)\)</span> covers
-our demand constraint, the requirement that each site, <span class="math">\((i)\)</span>, must be
+our demand constraint, the requirement that each site, <span class="math">\(i\)</span>, must be
 visited as many times as it needs equipment dropped-off or picked-up each
 day. To ensure that <span class="math">\((6)\)</span> only counts the visits that correspond to the
 type of demand the site has, <span class="math">\((7)\)</span> applies the route constraints that
@@ -210,6 +210,288 @@ we can then summarize the data we&#8217;ve recorded to understand the costs
 associated with this variation&#8217;s of region delivery system.</p>
 <p>Continue on to <a class="reference internal" href="reporting.html#reporting"><span class="std std-ref">Reporting</span></a></p>
 </div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<p>Daily routing wrapper function:</p>
+<dl class="function">
+<dt id="iterate.solve_day">
+<code class="descclassname">iterate.</code><code class="descname">solve_day</code><span class="sig-paren">(</span><em>fixed_parameters</em>, <em>daily_inputs</em>, <em>region</em><span class="sig-paren">)</span><a class="headerlink" href="#iterate.solve_day" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine the usage of semi-trucks and haulers for a given day.</p>
+<p>Creates parameters specific to solving a given day&#8217;s truck and hauler usage.
+Uses extension of a Vehicle Routing problem to determine how many
+semi-trucks/haulers were needed, how many miles were driven, and how long
+each hauler works.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fixed_parameters</strong> (<em>dict</em>) &#8211; Parameters that are constant for any variation and region (as defined
+in the main function)</li>
+<li><strong>daily_inputs</strong> (<em>dict</em>) &#8211; inputs needed each day to make remaining parameters and record the
+outputs of our routing model</li>
+<li><strong>region</strong> (<em>str</em>) &#8211; The geographical region for which we&#8217;re finding usage stats</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>fleet_mileage</strong> (<em>numpy.ndarray</em>) &#8211; How many miles a fleet of a given size runs on a given day</li>
+<li><strong>hauler_hours</strong> (<em>numpy.ndarray</em>) &#8211; How many minutes each hauler works each day</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>Creating parameters wrapper function:</p>
+<dl class="function">
+<dt id="parameters.make_parameters">
+<code class="descclassname">parameters.</code><code class="descname">make_parameters</code><span class="sig-paren">(</span><em>fixed_parameters</em>, <em>daily_inputs</em>, <em>region</em><span class="sig-paren">)</span><a class="headerlink" href="#parameters.make_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the remaining parameters (all of which vary by day) to solve
+our daily routing problem</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fixed_parameters</strong> (<em>dict</em>) &#8211; Parameters that are constant for any variation and region (as defined
+in the main function)</li>
+<li><strong>daily_inputs</strong> (<em>dict</em>) &#8211; inputs needed each day to make remaining parameters and record the
+outputs of our routing model</li>
+<li><strong>region</strong> (<em>str</em>) &#8211; the geographical region for the variation we are modeling</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>variable_parameters</strong> &#8211; The parameters that vary by day but are still needed for our model
+to run</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>Demand:</p>
+<dl class="function">
+<dt id="parameters.make_demand_list">
+<code class="descclassname">parameters.</code><code class="descname">make_demand_list</code><span class="sig-paren">(</span><em>daily_demand</em><span class="sig-paren">)</span><a class="headerlink" href="#parameters.make_demand_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts our daily demand from a pandas series to a list and adds the
+demands (0 demand) for where haulers start and end their days</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>daily_demand</strong> (<em>pandas.core.series.Series</em>) &#8211; How much demand each site has on a given day, given that the site
+needs at least one drop-off or one pick-up</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>demand_list</strong> &#8211; Demands for all locations (job sites with demands and the hub) to be
+included on our graph for the day&#8217;s hauler routing</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>Route constraints:</p>
+<dl class="function">
+<dt id="parameters.make_route_constraints">
+<code class="descclassname">parameters.</code><code class="descname">make_route_constraints</code><span class="sig-paren">(</span><em>demand_list</em><span class="sig-paren">)</span><a class="headerlink" href="#parameters.make_route_constraints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a matrix detailing how many times the route from site i to site j
+can be travelled by all haulers in one day</p>
+<p>The following constraints apply to the number of times the route from i to j
+can be travelled. Travelling the route from i to j never happens if they both
+need drop-offs, both need pick-ups, or i is where a hauler ends his day. If
+i and j have opposite demand types (one with drop-offs, the other pick-ups),
+i to j can be travelled as many times as the minimum demand had by the two
+sites. We place no constraint on how many times a hauler can return to the
+hub to reload his trailer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>demand_list</strong> (<em>list</em>) &#8211; Demands for all locations (job sites with demands and the hub) to be
+included on our graph for the day&#8217;s hauler routing</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>route_constraints</strong> &#8211; The number of times the route between any two locations can be
+travelled by all haulers</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>Travel:</p>
+<dl class="function">
+<dt id="parameters.make_travel_matrix">
+<code class="descclassname">parameters.</code><code class="descname">make_travel_matrix</code><span class="sig-paren">(</span><em>daily_demand</em>, <em>file_path</em>, <em>region</em>, <em>travel_rate</em>, <em>day_length</em>, <em>handle</em><span class="sig-paren">)</span><a class="headerlink" href="#parameters.make_travel_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a matrix describing how long the route from location i to location
+j is</p>
+<p>Takes the difference in coordinates for each location to be visited on a given
+day and converts them to mileage. Rounds routes that are greater than one
+day&#8217;s worth of miles to the max miles that can be done in one day.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>daily_demand</strong> (<em>pandas.core.series.Series</em>) &#8211; How much demand each site has on a given day, given that the site
+needs at least one drop-off or one pick-up</li>
+<li><strong>file_path</strong> (<em>str</em>) &#8211; location of the excel spreadsheet that has our demand and site location
+data</li>
+<li><strong>region</strong> (<em>str</em>) &#8211; The geographical region for which we&#8217;re finding usage stats</li>
+<li><strong>travel_rate</strong> (<em>float</em>) &#8211; How many miles per minute a hauler can drive on average</li>
+<li><strong>day_length</strong> (<em>int</em>) &#8211; How many minutes per day a hauler can work</li>
+<li><strong>handle</strong> (<em>int</em>) &#8211; How long it takes on average for a hauler to unload or reload his trailer</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>travel_matrix</strong> &#8211; How many miles the route from location i to location j is</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>Subsets:</p>
+<dl class="function">
+<dt id="parameters.make_subsets">
+<code class="descclassname">parameters.</code><code class="descname">make_subsets</code><span class="sig-paren">(</span><em>customers</em>, <em>demand_list</em><span class="sig-paren">)</span><a class="headerlink" href="#parameters.make_subsets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make all even sized subsets of customers (job sites) to be visited each
+day, excluding those where all customers have the same kind of demand (all
+drop-offs or all pick-ups)</p>
+<p>Needed for ensuring the routes each hauler makes this day are all connected</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>customers</strong> (<em>list</em>) &#8211; A list of the indices corresponding to each job site with a demand on
+a given day</li>
+<li><strong>demand_list</strong> (<em>list</em>) &#8211; Demands for all locations (job sites with demands and the hub) to be
+included on our graph for the day&#8217;s hauler routing</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>subsets</strong> &#8211; The list of all even sized subsets of customers where both types of
+demand are present</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>Model implementation:</p>
+<dl class="function">
+<dt id="hauler_routing.route_fleet">
+<code class="descclassname">hauler_routing.</code><code class="descname">route_fleet</code><span class="sig-paren">(</span><em>fixed_parameters</em>, <em>variable_parameters</em>, <em>haulers</em><span class="sig-paren">)</span><a class="headerlink" href="#hauler_routing.route_fleet" title="Permalink to this definition">¶</a></dt>
+<dd><p>An Integer Program for determining if a given sized fleet of equipment
+haulers can feasibly meet the demand for drop-offs and pick-ups in a
+given day</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fixed_parameters</strong> (<em>dict</em>) &#8211; Parameters that are constant for any variation and region (as defined
+in the main function)</li>
+<li><strong>variable_parameters</strong> (<em>dict</em>) &#8211; The parameters that vary by day but are still needed for our model
+to run</li>
+<li><strong>haulers</strong> (<em>list</em>) &#8211; A list of indices for all available equipment haulers in the fleet</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>results</strong> &#8211; Returns whether or not the IP solved to optimality, the total number
+of miles run by the fleet, and the number of times each hauler ran
+each route available to be travelled this day.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>Summary of fleet mileage accumulated on a given day:</p>
+<dl class="function">
+<dt id="recording.record_fleet_mileage">
+<code class="descclassname">recording.</code><code class="descname">record_fleet_mileage</code><span class="sig-paren">(</span><em>fleet_size</em>, <em>date_index</em>, <em>fleet_mileage</em>, <em>objective</em>, <em>fleet_upper_bound</em><span class="sig-paren">)</span><a class="headerlink" href="#recording.record_fleet_mileage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Records the total mileage run by the fleet each day</p>
+<p>Assigns the mileage to all possible fleet sizes greater than or equal to
+the minimum fleet size.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fleet_size</strong> (<em>int</em>) &#8211; The number of haulers in the fleet for this iteration</li>
+<li><strong>date_index</strong> (<em>int</em>) &#8211; The index of the date for which is currently being solved</li>
+<li><strong>fleet_mileage</strong> (<em>numpy.ndarray</em>) &#8211; The total number of miles that a fleet of a given size would need to
+run each day to meet all of the demand.</li>
+<li><strong>objective</strong> (<em>int</em>) &#8211; The total number of miles the fleet ran to meet all demand on this day</li>
+<li><strong>fleet_upper_bound</strong> (<em>int</em>) &#8211; The maximum number of haulers that can be available on one day</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>fleet_mileage</strong> &#8211; The total number of miles that a fleet of a given size would need to
+run each day to meet all of the demand.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>Summary of time equipment haulers spent working on a given day:</p>
+<dl class="function">
+<dt id="recording.record_hauler_hours">
+<code class="descclassname">recording.</code><code class="descname">record_hauler_hours</code><span class="sig-paren">(</span><em>hauler_hours</em>, <em>variables</em>, <em>handle</em>, <em>travel_rate</em>, <em>fleet_size</em>, <em>date_index</em>, <em>locations</em>, <em>travel_matrix</em><span class="sig-paren">)</span><a class="headerlink" href="#recording.record_hauler_hours" title="Permalink to this definition">¶</a></dt>
+<dd><p>Records the number of minutes each hauler works each day</p>
+<p>Sums the time taken by each hauler to run all of his assigned routes in a
+day. Gives the greatest amount of work to the lowest indexed haulers.
+Restricted to there being 10 or fewer locations on a graph for each day.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>hauler_hours</strong> (<em>numpy.ndarray</em>) &#8211; How many minutes each hauler works each day</li>
+<li><strong>variables</strong> (<em>dict</em>) &#8211; The number of times each hauler travels each route on a given day</li>
+<li><strong>handle</strong> (<em>int</em>) &#8211; How long it takes on average for a hauler to unload or reload his trailer</li>
+<li><strong>travel_rate</strong> (<em>float</em>) &#8211; How many miles per minute a hauler can drive on average</li>
+<li><strong>fleet_size</strong> (<em>int</em>) &#8211; The number of haulers in the fleet for this iteration</li>
+<li><strong>date_index</strong> (<em>int</em>) &#8211; The index of the date for which is currently being solved</li>
+<li><strong>locations</strong> (<em>list</em>) &#8211; The indices of all sites the haulers will visit on a given day (including
+the hub)</li>
+<li><strong>travel_matrix</strong> (<em>numpy.ndarray</em>) &#8211; How many miles the route from location i to location j is</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>hauler_hours</strong> &#8211; How many minutes each hauler works each day</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
 <div class="section" id="indices">
 <h2>Indices<a class="headerlink" href="#indices" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
@@ -232,6 +514,7 @@ associated with this variation&#8217;s of region delivery system.</p>
 <li><a class="reference internal" href="#creating-parameters">Creating Parameters</a></li>
 <li><a class="reference internal" href="#developing-the-model">Developing the Model</a></li>
 <li><a class="reference internal" href="#running-the-model">Running the Model</a></li>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
 <li><a class="reference internal" href="#indices">Indices</a></li>
 </ul>
 </li>

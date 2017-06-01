@@ -60,7 +60,7 @@ able to solve. They are the following:
     * travel, :math:`t_{i,j}`
         A matrix stating how many miles apart a site, :math:`i`, is from a
         site, :math:`j`, indexed in the same order as the locations list.
-        The sites represented in this matrix are only those
+        The sites represented in this matrix are only the hubs and those
         which have a demand for drop-offs or pick-ups on this day, and the
         distances are calculated by converting the differences in
         geographical coordinates listed for each site.
@@ -145,7 +145,7 @@ all driving and unloading/loading (un/loading) of semi-trucks must be less
 than the length of the allowable work day. We then added the time of an extra
 un/loading to the workable day to reflect that on average, a semi-truck will
 not need un/loading at both the start and end of its day. :math:`(6)` covers
-our demand constraint, the requirement that each site, :math:`(i)`, must be
+our demand constraint, the requirement that each site, :math:`i`, must be
 visited as many times as it needs equipment dropped-off or picked-up each
 day. To ensure that :math:`(6)` only counts the visits that correspond to the
 type of demand the site has, :math:`(7)` applies the route constraints that
@@ -178,6 +178,48 @@ we can then summarize the data we've recorded to understand the costs
 associated with this variation's of region delivery system.
 
 Continue on to :ref:`reporting`
+
+
+
+Documentation
+-------------
+Daily routing wrapper function:
+
+.. autofunction:: iterate.solve_day
+
+Creating parameters wrapper function:
+
+.. autofunction:: parameters.make_parameters
+
+Demand:
+
+.. autofunction:: parameters.make_demand_list
+
+Route constraints:
+
+.. autofunction:: parameters.make_route_constraints
+
+Travel:
+
+.. autofunction:: parameters.make_travel_matrix
+
+Subsets:
+
+.. autofunction:: parameters.make_subsets
+
+Model implementation:
+
+.. autofunction:: hauler_routing.route_fleet
+
+Summary of fleet mileage accumulated on a given day:
+
+.. autofunction:: recording.record_fleet_mileage
+
+Summary of time equipment haulers spent working on a given day:
+
+.. autofunction:: recording.record_hauler_hours
+
+
 
 Indices
 -------

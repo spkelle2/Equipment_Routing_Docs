@@ -51,9 +51,9 @@ to the problem that remain constant. They are as follows:
           dropped-off and a positive one sets of equipment needing picked-up.
           The second image below shows an example.
 
-.. image:: coordinates.png
+.. image:: coordinates1.png
 
-.. image:: demand.png
+.. image:: demand1.png
 
 Region
 ------
@@ -76,6 +76,8 @@ will differ by variation of region, we'll move next to talking about what
 parts of the code and calculation take place individually for each variation.
 
 Continue to :ref:`variation`
+
+
 
 Indices
 -------

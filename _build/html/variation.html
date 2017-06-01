@@ -67,7 +67,7 @@ having much effect on the number of sets of equipment.</p>
 </div>
 <div class="section" id="set-up-for-daily-computations">
 <h2>Set-Up for Daily Computations<a class="headerlink" href="#set-up-for-daily-computations" title="Permalink to this headline">¶</a></h2>
-<p>Assigning the time window as optimally as possible, the fist step for each
+<p>Assigning the time window as optimally as possible, the first step for each
 variation of region is to smooth the demand for the number of drop-offs and
 pick-ups to be made each day as evenly as possible subject to all drop-offs
 and pick-ups occuring within the time window. (The section &#8220;Smoothing Demand&#8221;
@@ -169,6 +169,10 @@ construction site&#8217;s demand.</p>
 now smoothed and a way to record our results created, we can move on to
 calculating the routes that the fleet of haulers must make each day.</p>
 <p>Continue to <a class="reference internal" href="daily-routing.html#daily-routing"><span class="std std-ref">Daily Routing</span></a></p>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<p>Set-up for daily computation:</p>
 <dl class="function">
 <dt id="iterate.solve_variation">
 <code class="descclassname">iterate.</code><code class="descname">solve_variation</code><span class="sig-paren">(</span><em>fixed_parameters</em>, <em>region</em>, <em>variation</em><span class="sig-paren">)</span><a class="headerlink" href="#iterate.solve_variation" title="Permalink to this definition">¶</a></dt>
@@ -185,6 +189,113 @@ in the main function)</li>
 <li><strong>region</strong> (<em>str</em>) &#8211; The geographical region for which we&#8217;re finding usage stats</li>
 <li><strong>variation</strong> (<em>str</em>) &#8211; The variation of the geographical region for which we solve</li>
 </ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>Creating the set, <span class="math">\(S\)</span>, and calling the smoothing integer program:</p>
+<dl class="function">
+<dt id="smoothing.iterate">
+<code class="descclassname">smoothing.</code><code class="descname">iterate</code><span class="sig-paren">(</span><em>period_inputs</em>, <em>current_start_index</em><span class="sig-paren">)</span><a class="headerlink" href="#smoothing.iterate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Smoothes &#8216;period&#8217; days of demand data</p>
+<p>Pulls the original demand data for the next &#8216;period&#8217; days to be smoothed.
+Creates a matrix of possible days each site can have drop-offs or pick-ups,
+constrained by the &#8216;window&#8217; and the &#8216;period&#8217; of days being considered.
+Smoothes &#8216;period&#8217; days of demand and records the new number of drop-offs
+and pick-ups to be made to each site each day in this period.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>period_inputs</strong> (<em>dict</em>) &#8211; The variables recording how &#8216;smooth&#8217; the demand being adjusted &#8216;period&#8217;
+days at a time can be. Includes how many days are in a period, how many
+days are in our window, the dataframe recording demand, an array
+storing how much demand each day has after smoothing, the largest
+demand seen for any one day, and a flag for if this period length
+returns a feasible solution for every &#8216;period&#8217; days smoothed.</li>
+<li><strong>current_start_index</strong> (<em>int</em>) &#8211; The column of the demand dataframe from which the next &#8216;period&#8217; days
+of demand will begin to be smoothed</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>period_inputs</strong> &#8211; Inputs recording statistics on the smoothed demand and the smoothed
+demand itself are saved to their respective variables and returned.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>Demand smoothing integer program:</p>
+<dl class="function">
+<dt id="smoothing.smoothing_model">
+<code class="descclassname">smoothing.</code><code class="descname">smoothing_model</code><span class="sig-paren">(</span><em>d</em>, <em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#smoothing.smoothing_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>The integer program responsible for smoothing &#8216;period&#8217; days of demand</p>
+<p>Minimizes the total number of demand for any one day, while ensuring all
+demand for each site is met within the time window.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>d</strong> (<em>numpy.ndarray</em>) &#8211; The number of drop-offs or pick-ups each site needs each day</li>
+<li><strong>s</strong> (<em>list</em>) &#8211; Three dimensional list describing the alternative delivery dates
+each site has for each day it has demand. If a site has no demand on
+a given day, its list of alternatives is empty.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>results</strong> &#8211; Whether or not the IP solved to optimality, what the largest
+demand for the period was after smoothing, and the newly assigned
+demands to each site each day.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>Improvement algorithm/wrapper for demand smoothing functions:</p>
+<dl class="function">
+<dt id="smoothing.smooth_demand">
+<code class="descclassname">smoothing.</code><code class="descname">smooth_demand</code><span class="sig-paren">(</span><em>file_path</em>, <em>variation</em>, <em>window</em>, <em>start_date</em>, <em>end_date</em><span class="sig-paren">)</span><a class="headerlink" href="#smoothing.smooth_demand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Smooth the demand for drop-offs and pick-ups for a given variation as
+much as possible constrained to the time window</p>
+<p>Defines a list of period lengths. For each period length, demand is smoothed
+&#8216;period length&#8217; days at a time. Returns the smoothed demand for the entire
+time range corresponding to the length of period which results in the lowest
+variance in total daily demand.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>file_path</strong> (<em>str</em>) &#8211; location of the excel spreadsheet that has our demand and site location
+data</li>
+<li><strong>variation</strong> (<em>str</em>) &#8211; which variation of a proposed region for which we want to smooth demand</li>
+<li><strong>window</strong> (<em>str</em>) &#8211; The number of different days to allow a job site to have equipment
+dropped-off or picked-up</li>
+<li><strong>start_date</strong> (<em>str</em>) &#8211; The first day in our range of time we are considering (&#8216;yyyy-mm-dd&#8217;
+format)</li>
+<li><strong>end_date</strong> (<em>str</em>) &#8211; The last day in our range of time we are considering (&#8216;yyyy-mm-dd&#8217;
+format)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>mv_demand_df</strong> &#8211; The minimum variance demand dataframe is the demand for each job site
+each day, spread as smoothly as possible, constrained to the size of
+our window</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.core.frame.DataFrame</p>
 </td>
 </tr>
 </tbody>
@@ -215,6 +326,7 @@ in the main function)</li>
 <li><a class="reference internal" href="#set-up-for-daily-computations">Set-Up for Daily Computations</a></li>
 <li><a class="reference internal" href="#smoothing-demand-integer-program">Smoothing Demand: Integer Program</a></li>
 <li><a class="reference internal" href="#smoothing-demand-improvement-algorithm">Smoothing Demand: Improvement Algorithm</a></li>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
 <li><a class="reference internal" href="#indices">Indices</a></li>
 </ul>
 </li>

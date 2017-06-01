@@ -26,7 +26,7 @@ having much effect on the number of sets of equipment.
 Set-Up for Daily Computations
 -----------------------------
 
-Assigning the time window as optimally as possible, the fist step for each
+Assigning the time window as optimally as possible, the first step for each
 variation of region is to smooth the demand for the number of drop-offs and
 pick-ups to be made each day as evenly as possible subject to all drop-offs
 and pick-ups occuring within the time window. (The section "Smoothing Demand"
@@ -150,7 +150,27 @@ calculating the routes that the fleet of haulers must make each day.
 
 Continue to :ref:`daily-routing`
 
+
+
+Documentation
+-------------
+
+Set-up for daily computation:
+
 .. autofunction:: iterate.solve_variation
+
+Creating the set, :math:`S`, and calling the smoothing integer program:
+
+.. autofunction:: smoothing.iterate
+
+Demand smoothing integer program:
+
+.. autofunction:: smoothing.smoothing_model
+
+Improvement algorithm/wrapper for demand smoothing functions:
+
+.. autofunction:: smoothing.smooth_demand
+
 
 
 Indices
