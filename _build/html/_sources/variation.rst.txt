@@ -172,11 +172,3 @@ Improvement algorithm/wrapper for demand smoothing functions:
 .. autofunction:: smoothing.smooth_demand
 
 
-
-Indices
--------
-
-.. toctree::
-   :maxdepth: 1
-
-   daily-routing

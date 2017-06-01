@@ -79,12 +79,3 @@ Continue to :ref:`variation`
 
 
 
-Indices
--------
-
-.. toctree::
-   :maxdepth: 1
-
-   variation
-
-

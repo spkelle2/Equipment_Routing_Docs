@@ -152,19 +152,3 @@ Equipment set utilization graphs:
 
 
 
-Indices
--------
-
-.. toctree::
-    :maxdepth: 1
-
-    conclusion
-
-
-
-
-
-
-
-
-

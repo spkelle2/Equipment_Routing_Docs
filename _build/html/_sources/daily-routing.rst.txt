@@ -54,8 +54,12 @@ able to solve. They are the following:
           up equipment.
 
         * A hauler can only use the demand from one site to satisfy an
-          opposite demand at another if both demands have not already been
-          satisfied.   
+          opposite demand at another as many times as is the minimum absolute
+          value of demand between the two sites.
+
+        This assignment is very particular. Please see the documentation below
+        (make_route_constraints) and its definition in the parameters module
+        for more details.
       
     * travel, :math:`t_{i,j}`
         A matrix stating how many miles apart a site, :math:`i`, is from a
@@ -132,8 +136,8 @@ equipment hauler routing for each day, we can define our model.
    & & &y_{m,k} & &\in \{0,1\} & &\forall \text{ } k \in \text{haulers}, m
    \in \text{subsets} &(11)
  
-:math:`(1)` tells us our objective is to minimize the total amount of time
-that our fleet of equipment haulers spend driving each day. :math:`(2)-(4)`
+:math:`(1)` tells us our objective is to minimize the total amount of distance
+that our fleet of equipment haulers cover each day. :math:`(2)-(4)`
 add constraints for modeling the travel from one site to the next. :math:`(2)`
 says that each hauler must leave the hub each day, even if just to return to it
 at no cost (equivalent to not being used). If a hauler arrives at a site,
@@ -142,15 +146,15 @@ also leaves that site for another. Once a hauler has made all drop-offs and
 pick-ups it needed to make for a day, :math:`(4)` requires that he returns to
 the hub. :math:`(5)` brings our time constraints into play. We required that
 all driving and unloading/loading (un/loading) of semi-trucks must be less
-than the length of the allowable work day. We then added the time of an extra
-un/loading to the workable day to reflect that on average, a semi-truck will
-not need un/loading at both the start and end of its day. :math:`(6)` covers
-our demand constraint, the requirement that each site, :math:`i`, must be
-visited as many times as it needs equipment dropped-off or picked-up each
+than the length of the allowable work day. Time for an extra handle was added
+under the assumption that the semi-truck needed no adjustments at neither the
+start nor end of its day. :math:`(6)` covers our demand
+constraint, the requirement that each site, :math:`i`, must be visited exactly
+as many times as it needs equipment dropped-off or picked-up each
 day. To ensure that :math:`(6)` only counts the visits that correspond to the
 type of demand the site has, :math:`(7)` applies the route constraints that
-ensure when a hauler visits a site his semi-truck is able to satisfy one unit
-of that site's demand. :math:`(8)-(9)` are additions to
+force a hauler's visit to a site be one where his semi-truck is able to
+satisfy one unit of that site's demand. :math:`(8)-(9)` are additions to
 :math:`(2)-(4)`, enforcing that equipment haulers take routes that are only
 possible in the real world. :math:`(8)` monitors whether or not an equipment
 hauler enters a given subset of sites, while :math:`(9)` requires that an
@@ -220,12 +224,4 @@ Summary of time equipment haulers spent working on a given day:
 .. autofunction:: recording.record_hauler_hours
 
 
-
-Indices
--------
-
-.. toctree::
-    :maxdepth: 1
-
-    reporting
 

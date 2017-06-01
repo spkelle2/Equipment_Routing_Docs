@@ -225,11 +225,3 @@ Summary of time equipment haulers spent working on a given day:
 
 
 
-Indices
--------
-
-.. toctree::
-    :maxdepth: 1
-
-    reporting
-

@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &#8212; Logistics Optimization for Regionally Located Equipment  documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Main Function" href="main.html" />
+    <link rel="prev" title="Contents" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="introduction">
+<span id="id1"></span><h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>This documentation explains the math, algorithms, and computer code used to
+arrive at a solution for how to transport sets of construction equipment kept
+in various geographical regions for a national construction company.</p>
+<p>This problem concerns a construction company inquiring if it would be more
+profitable to transfer the responsibility of delivering construction
+equipment from the construction crews to an internal delivery service for
+each geographical region in which they do business. Such a delivery service
+would consist of semi-trucks and flatbed trailers, as well as equipment
+haulers (truck drivers), and would be responsible for moving equipment to
+construction sites in the region before jobs begin and from them once
+they end. Currently, the construction crews have extra licensing and large
+vehicles only fully utilized on days they move equipment to and from the
+sites. A comparison of costs can be used to determine which is the more
+effective system.</p>
+<p>With the costs of the crews moving the equipment on their own known to the
+construction company already, this work will focus on the calculation of
+costs for the new delivery service, namely:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the number of semi-trucks and trailers</li>
+<li>the number of equipment haulers (truck drivers)</li>
+<li>the number of construction equipment sets</li>
+</ul>
+</div></blockquote>
+<div class="section" id="topics">
+<h2>Topics<a class="headerlink" href="#topics" title="Permalink to this headline">¶</a></h2>
+<p>I&#8217;ll cover a few different topics throughout this documentation in order to
+describe the entire approach to determining if an internal delivery system is
+a more viable option to construction crews transporting their own equipment.</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="main.html#main"><span class="std std-ref">Main Function</span></a> covers the inputs that the code requires to begin
+calculations. If you&#8217;re looking for a full understanding of how the
+math, algorithms, and code interact, start here.</li>
+<li><a class="reference internal" href="variation.html#variation"><span class="std std-ref">Region Variation</span></a> details the calculations that only need done once
+for each variation of a geographic region we consider. If you&#8217;re only
+interested in the math, read this part and the next.</li>
+<li><a class="reference internal" href="daily-routing.html#daily-routing"><span class="std std-ref">Daily Routing</span></a> explains the data manipulation and calculations
+that require being solved one day at a time, for each variation of
+region we consider.</li>
+<li><a class="reference internal" href="reporting.html#reporting"><span class="std std-ref">Reporting</span></a> outlines how all of the data and calculations from the
+previous two topics come together into one final report that can be
+used to make a decision on using the internal delivery system.</li>
+<li>In <a class="reference internal" href="conclusion.html#conclusion"><span class="std std-ref">Conclusion</span></a>, I&#8217;ll give my closing remarks on the project.</li>
+</ul>
+</div></blockquote>
+<p>I hope you enjoy reading, and thank you for taking the time to check out my
+work!</p>
+<p>Sean Kelley</p>
+<p>Industrial Engineer, University of Illinois</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction</a><ul>
+<li><a class="reference internal" href="#topics">Topics</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Contents</a></li>
+      <li>Next: <a href="main.html" title="next chapter">Main Function</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/introduction.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Sean Kelley.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/introduction.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

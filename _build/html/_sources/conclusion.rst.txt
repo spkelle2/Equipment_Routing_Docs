@@ -29,12 +29,13 @@ solve at one time.
 
 Lastly, I think the reusability of the project could have benefitted from
 having a more automated way of generating data for the model to use. Due to
-time constraints, the best solution we could come up with was putting data
-directly into separate spreadsheets, but I think that could have been
-accomplished with much less difficulty on the end user if a list of sites and
-their dates of actitity were input instead. That way, the data on locations
-and demand for drop-offs and pick-ups for each variation could have just been
-mined automatically, saving time and stress on the user.
+time constraints, the best solution we could come up with was pulling data
+from a database and moving it by hand into separate spreadsheets, but I
+think that could have been accomplished with much less difficulty on the end
+user if an end-point for a database and a query were input instead. That way,
+the data on locations and demand for drop-offs and pick-ups for each
+variation could have just been mined automatically, saving time and stress on
+the user.
 
 Biography
 ---------
@@ -46,7 +47,7 @@ modeling mathematically the world around me and having a means of making a
 decision on what to do with whatever I have modeled. I developed an interest
 in computer science out of my endeavors to make operations research more
 valuable by means of developing time saving heuristics and embedding models
-into programs that the average person can use.
+into software that the average person can use.
 
 This work represents the joining of both of my interests which I have been
 developing throughout my education and serves as the capstone for my
@@ -54,10 +55,10 @@ collegiate career. I could not be more thankful for the people who have
 helped me get to this point, especially my father who instilled in me the
 work ethic required to gain the experience I needed to complete this project.
 
-Moving forward, I'd like to continue developing solutions, and eventually
-products, like this one that will leverage optimization methods for providing
-decision support. For any questions or inquiries, please feel free to
-reach me at the contact information below.
+Moving forward, I'd like to continue developing products, like this one, that
+will leverage optimization methods for providing decision support. For any
+questions or inquiries, please feel free to reach me at the contact
+information below.
 
 Thank you for taking the time to read my work.
 

@@ -1,0 +1,39 @@
+\begin{theindex}
+\def\bigletter#1{{\Large\sffamily#1}\nopagebreak\vspace{1mm}}
+
+  \bigletter E
+  \item equipment\_graph\_maker() (in module reporting), \hyperpage{22}
+  \item equipment\_usage\_analysis() (in module reporting), \hyperpage{21}
+
+  \indexspace
+  \bigletter H
+  \item hauler\_graph\_maker() (in module reporting), \hyperpage{21}
+
+  \indexspace
+  \bigletter I
+  \item iterate() (in module smoothing), \hyperpage{9}
+
+  \indexspace
+  \bigletter M
+  \item make\_demand\_list() (in module parameters), \hyperpage{14}
+  \item make\_parameters() (in module parameters), \hyperpage{13}
+  \item make\_report() (in module reporting), \hyperpage{20}
+  \item make\_route\_constraints() (in module parameters), \hyperpage{14}
+  \item make\_subsets() (in module parameters), \hyperpage{15}
+  \item make\_travel\_matrix() (in module parameters), \hyperpage{14}
+
+  \indexspace
+  \bigletter R
+  \item record\_fleet\_mileage() (in module recording), \hyperpage{15}
+  \item record\_hauler\_hours() (in module recording), \hyperpage{16}
+  \item route\_fleet() (in module hauler\_routing), \hyperpage{15}
+
+  \indexspace
+  \bigletter S
+  \item smooth\_demand() (in module smoothing), \hyperpage{10}
+  \item smoothing\_model() (in module smoothing), \hyperpage{9}
+  \item solve\_day() (in module iterate), \hyperpage{13}
+  \item solve\_variation() (in module iterate), \hyperpage{9}
+  \item summarize() (in module reporting), \hyperpage{21}
+
+\end{theindex}
