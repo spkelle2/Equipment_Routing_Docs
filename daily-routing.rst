@@ -146,7 +146,9 @@ also leaves that site for another. Once a hauler has made all drop-offs and
 pick-ups it needed to make for a day, :math:`(4)` requires that he returns to
 the hub. :math:`(5)` brings our time constraints into play. We required that
 all driving and unloading/loading (un/loading) of semi-trucks must be less
-than the length of the allowable work day. :math:`(6)` covers our demand
+than the length of the allowable work day. Time for an extra handle was added
+under the assumption that the semi-truck needed no adjustments at neither the
+start nor end of its day. :math:`(6)` covers our demand
 constraint, the requirement that each site, :math:`i`, must be visited exactly
 as many times as it needs equipment dropped-off or picked-up each
 day. To ensure that :math:`(6)` only counts the visits that correspond to the
