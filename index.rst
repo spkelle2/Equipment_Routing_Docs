@@ -49,7 +49,7 @@ a more viable option to construction crews transporting their own equipment.
       that require being solved one day at a time, for each variation of
       region we consider.
 
-    * :ref:`reporting` outlines how all of the data the calculations from the
+    * :ref:`reporting` outlines how all of the data and calculations from the
       previous two topics come together into one final report that can be
       used to make a decision on using the internal delivery system.
 
