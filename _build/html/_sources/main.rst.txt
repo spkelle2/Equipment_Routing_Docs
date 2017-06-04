@@ -55,6 +55,12 @@ to the problem that remain constant. They are as follows:
 
 .. image:: demand1.png
 
+.. note::
+
+    A full example of what a proper data sheet cooresponding with the code
+    looks like, check the repository at
+    https://github.com/spkelle2/Equipment_Routing.
+
 Region
 ------
 

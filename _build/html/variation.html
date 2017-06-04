@@ -70,8 +70,16 @@ having much effect on the number of sets of equipment.</p>
 <p>Assigning the time window as optimally as possible, the first step for each
 variation of region is to smooth the demand for the number of drop-offs and
 pick-ups to be made each day as evenly as possible subject to all drop-offs
-and pick-ups occuring within the time window. (The section &#8220;Smoothing Demand&#8221;
-below will cover this process more in depth.) We then create two tables, the
+and pick-ups occuring within the time window before a work at a site begins
+or after work at a site ends. (The section &#8220;Smoothing Demand&#8221; below will
+cover this process more in depth.)</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To assign the time window as optimally as possible, it is suggested to
+try a small range of values in order to see which returns a least total
+cost in the report output at the end.</p>
+</div>
+<p>We then create two tables, the
 first recording how many miles all semi-trucks run each day and the second
 recording how many hours each equipment hauler works each day. We then return
 to the data sheet with the number of equipment sets to be picked-up or
@@ -92,8 +100,8 @@ haulers we need for each day. Before diving into that, though, let&#8217;s take 
 second to understand what&#8217;s going on in the demand smoothing part I mentioned
 above.</p>
 </div>
-<div class="section" id="smoothing-demand-integer-program">
-<h2>Smoothing Demand: Integer Program<a class="headerlink" href="#smoothing-demand-integer-program" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="demand-smoothing-model">
+<h2>Demand Smoothing Model<a class="headerlink" href="#demand-smoothing-model" title="Permalink to this headline">¶</a></h2>
 <p>As mentioned previously, the purpose of smoothing our demand for
 equipment drop-offs and pick-ups is to greatly reduce the amount of
 semi-trucks and equipment haulers needed to move all of the equipment while
@@ -120,7 +128,7 @@ equipment) going to or from site <span class="math">\(i\)</span> on day <span cl
 single day, <span class="math">\(l\)</span>. We can now form the following integer program:</p>
 <div class="math">
 \[ \begin{align}\begin{aligned}&amp;\text{minimize } &amp;z &amp; &amp; &amp; &amp;(1)\\&amp;\text{s.t.:} &amp; &amp; &amp; &amp;\\&amp; \sum_{l' \in S_{i,l}} &amp; w_{i,l'} &amp; = |d_{i,l}| \text{ } &amp; \forall
-&amp; \text{ } i,l : S_{i,l} \neq \text{{}} &amp;(2)\\&amp; \sum_{i} &amp; w_{i,l} &amp; \leq z \text{ } &amp; \forall &amp; \text{ } l &amp;(3)\\&amp; &amp; w_{i,l}, z &amp; \in Z \geq 0 \text{ } &amp; \forall &amp; \text{ } i,l &amp; (4)\end{aligned}\end{align} \]</div>
+&amp; \text{ } i,l : S_{i,l} \neq \{\} &amp;(2)\\&amp; \sum_{i} &amp; w_{i,l} &amp; \leq z \text{ } &amp; \forall &amp; \text{ } l &amp;(3)\\&amp; &amp; w_{i,l}, z &amp; \in Z \geq 0 \text{ } &amp; \forall &amp; \text{ } i,l &amp; (4)\end{aligned}\end{align} \]</div>
 <p><span class="math">\((1)\)</span> tells us that we are minimizing <span class="math">\(z\)</span>, the maximum number of
 pick-ups and drop-offs to be done on any single day. This is enforced by
 <span class="math">\((3)\)</span>, stating that our objective, <span class="math">\(z\)</span>, must be greater than or
@@ -136,8 +144,8 @@ needed done, and <span class="math">\((1)\)</span> and <span class="math">\((3)\
 made each day are as few as possible. <span class="math">\((4)\)</span> simply prevents any half-
 drop-offs or half-pick-ups from being made.</p>
 </div>
-<div class="section" id="smoothing-demand-improvement-algorithm">
-<h2>Smoothing Demand: Improvement Algorithm<a class="headerlink" href="#smoothing-demand-improvement-algorithm" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="demand-smoothing-improvement-algorithm">
+<h2>Demand Smoothing Improvement Algorithm<a class="headerlink" href="#demand-smoothing-improvement-algorithm" title="Permalink to this headline">¶</a></h2>
 <p>One issue I saw with the formulation we came up with is that if a couple of
 days were to have a much higher demand for drop-offs and pick-ups than
 all of the others, <span class="math">\((3)\)</span> would not be a tightly enforced
@@ -316,8 +324,8 @@ our window</p>
 <li><a class="reference internal" href="#">Region Variation</a><ul>
 <li><a class="reference internal" href="#importance-of-time-windows">Importance of Time Windows</a></li>
 <li><a class="reference internal" href="#set-up-for-daily-computations">Set-Up for Daily Computations</a></li>
-<li><a class="reference internal" href="#smoothing-demand-integer-program">Smoothing Demand: Integer Program</a></li>
-<li><a class="reference internal" href="#smoothing-demand-improvement-algorithm">Smoothing Demand: Improvement Algorithm</a></li>
+<li><a class="reference internal" href="#demand-smoothing-model">Demand Smoothing Model</a></li>
+<li><a class="reference internal" href="#demand-smoothing-improvement-algorithm">Demand Smoothing Improvement Algorithm</a></li>
 <li><a class="reference internal" href="#documentation">Documentation</a></li>
 </ul>
 </li>

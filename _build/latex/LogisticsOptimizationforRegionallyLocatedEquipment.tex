@@ -40,7 +40,7 @@
 
 
 \title{Logistics Optimization for Regionally Located Equipment Documentation}
-\date{Jun 01, 2017}
+\date{Jun 04, 2017}
 \release{}
 \author{Sean Kelley}
 \newcommand{\sphinxlogo}{}
@@ -59,23 +59,34 @@
 \label{\detokenize{introduction:introduction}}\label{\detokenize{introduction::doc}}\label{\detokenize{introduction:contents}}\label{\detokenize{introduction:id1}}
 This documentation explains the math, algorithms, and computer code used to
 arrive at a solution for how to transport sets of construction equipment kept
-in various geographical regions for a national construction company.
+in various geographical regions for a national construction company. In the
+general sense, the code explained details the necessary investments of
+delivery vehicles and commodities to make feasible a single, large commodity
+delivery network, where large means that one unit of the commodity equals the
+capacity of our delivery vehicle. The single, large commodity delivery network
+will be known throughout the rest of the documentation as ``the internal
+delivery system.''
 
-This problem concerns a construction company inquiring if it would be more
-profitable to transfer the responsibility of delivering construction
-equipment from the construction crews to an internal delivery service for
-each geographical region in which they do business. Such a delivery service
-would consist of semi-trucks and flatbed trailers, as well as equipment
-haulers (truck drivers), and would be responsible for moving equipment to
-construction sites in the region before jobs begin and from them once
-they end. Currently, the construction crews have extra licensing and large
-vehicles only fully utilized on days they move equipment to and from the
-sites. A comparison of costs can be used to determine which is the more
-effective system.
+The current state of the construction company's delivery of equipment sets
+(their large commodity) involves the crews working at each job site to take time
+away from building at the start and end of their projects to move all of the
+sets of equipment they need. Further adding to costs, the crews have extra
+licensing and fuel inefficient vehichles they only fully utilize on the days
+they move equipment. The construction company believed there to be a more
+efficient means of operating.
+
+In its inception, this problem concerned the construction
+company inquiring if an internal delivery system using its own drivers for
+moving sets of construction equipment would be more profitable than the crews
+moving the sets of equipment on their own for each geographical region in
+which they do business. Such a delivery system would consist of semi-trucks
+and flatbed trailers, as well as equipment haulers (truck drivers), and would
+be responsible for moving equipment sets to construction sites in the region
+before jobs begin and from them once they end.
 
 With the costs of the crews moving the equipment on their own known to the
 construction company already, this work will focus on the calculation of
-costs for the new delivery service, namely:
+costs for the new delivery system, namely:
 \begin{itemize}
 \item {} 
 the number of semi-trucks and trailers
@@ -87,6 +98,20 @@ the number of equipment haulers (truck drivers)
 the number of construction equipment sets
 
 \end{itemize}
+
+The output of the code described by this documentation is a report detailing
+the utilization of semi-trucks/haulers and equipment sets. This report can
+then be used to estimate the cost of the internal delivery system, leading us
+to make a comparison of the two systems and a confidently made decision.
+
+
+\section{Python Implementation}
+\label{\detokenize{introduction:python-implementation}}
+If you'd like to follow along in the code for which this documentation was
+created, I invite you to check out its repository at
+\url{https://github.com/spkelle2/Equipment\_Routing}. Most following chapters have
+a ``Documentation'' section detailing where specifically in the code you can
+find what is explained here.
 
 
 \section{Topics}
@@ -111,7 +136,7 @@ that require being solved one day at a time, for each variation of
 region we consider.
 
 \item {} 
-{\hyperref[\detokenize{reporting:reporting}]{\sphinxcrossref{\DUrole{std,std-ref}{Reporting}}}} outlines how all of the data and calculations from the
+{\hyperref[\detokenize{reporting:reporting}]{\sphinxcrossref{\DUrole{std,std-ref}{Reporting Our Results}}}} outlines how all of the data and calculations from the
 previous two topics come together into one final report that can be
 used to make a decision on using the internal delivery system.
 
@@ -205,6 +230,12 @@ The second image below shows an example.
 
 \noindent\sphinxincludegraphics{{demand1}.png}
 
+\begin{sphinxadmonition}{note}{Note:}
+A full example of what a proper data sheet cooresponding with the code
+looks like, check the repository at
+\url{https://github.com/spkelle2/Equipment\_Routing}.
+\end{sphinxadmonition}
+
 
 \section{Region}
 \label{\detokenize{main:region}}
@@ -256,8 +287,17 @@ having much effect on the number of sets of equipment.
 Assigning the time window as optimally as possible, the first step for each
 variation of region is to smooth the demand for the number of drop-offs and
 pick-ups to be made each day as evenly as possible subject to all drop-offs
-and pick-ups occuring within the time window. (The section ``Smoothing Demand''
-below will cover this process more in depth.) We then create two tables, the
+and pick-ups occuring within the time window before a work at a site begins
+or after work at a site ends. (The section ``Smoothing Demand'' below will
+cover this process more in depth.)
+
+\begin{sphinxadmonition}{note}{Note:}
+To assign the time window as optimally as possible, it is suggested to
+try a small range of values in order to see which returns a least total
+cost in the report output at the end.
+\end{sphinxadmonition}
+
+We then create two tables, the
 first recording how many miles all semi-trucks run each day and the second
 recording how many hours each equipment hauler works each day. We then return
 to the data sheet with the number of equipment sets to be picked-up or
@@ -280,8 +320,8 @@ second to understand what's going on in the demand smoothing part I mentioned
 above.
 
 
-\section{Smoothing Demand: Integer Program}
-\label{\detokenize{variation:smoothing-demand-integer-program}}
+\section{Demand Smoothing Model}
+\label{\detokenize{variation:demand-smoothing-model}}
 As mentioned previously, the purpose of smoothing our demand for
 equipment drop-offs and pick-ups is to greatly reduce the amount of
 semi-trucks and equipment haulers needed to move all of the equipment while
@@ -312,7 +352,7 @@ single day, \(l\). We can now form the following integer program:
 &\text{minimize } &z & & & &(1)\\
 &\text{s.t.:} & & & &\\
 & \sum_{l' \in S_{i,l}} & w_{i,l'} & = |d_{i,l}| \text{ } & \forall
-& \text{ } i,l : S_{i,l} \neq \text{{}} &(2)\\
+& \text{ } i,l : S_{i,l} \neq \{\} &(2)\\
 & \sum_{i} & w_{i,l} & \leq z \text{ } & \forall & \text{ } l &(3)\\
 & & w_{i,l}, z & \in Z \geq 0 \text{ } & \forall & \text{ } i,l & (4)\\
 \end{aligned}\end{align*}
@@ -333,8 +373,8 @@ made each day are as few as possible. \((4)\) simply prevents any half-
 drop-offs or half-pick-ups from being made.
 
 
-\section{Smoothing Demand: Improvement Algorithm}
-\label{\detokenize{variation:smoothing-demand-improvement-algorithm}}
+\section{Demand Smoothing Improvement Algorithm}
+\label{\detokenize{variation:demand-smoothing-improvement-algorithm}}
 One issue I saw with the formulation we came up with is that if a couple of
 days were to have a much higher demand for drop-offs and pick-ups than
 all of the others, \((3)\) would not be a tightly enforced
@@ -648,8 +688,8 @@ average time to load/unload a semi-truck (handling time), \(h\)
 \end{itemize}
 
 
-\section{Developing the Model}
-\label{\detokenize{daily-routing:developing-the-model}}
+\section{Developing the Routing Model}
+\label{\detokenize{daily-routing:developing-the-routing-model}}
 Lastly, the problem makes use of two variables. The first variable is
 \(x_{i,j,k}\), the number of times equipment hauler, \(k\), takes the
 route from a site, \(i\), to a site, \(j\). The other needed variable
@@ -711,8 +751,8 @@ that equipment haulers can take no partial routes and either enter or do not
 enter any given set of sites.
 
 
-\section{Running the Model}
-\label{\detokenize{daily-routing:running-the-model}}
+\section{Running the Routing Model}
+\label{\detokenize{daily-routing:running-the-routing-model}}
 One final piece of information remains to fully define our integer program
 for hauler routing, how many haulers (and therefore trucks) are available
 to be used on a given day. Since the purpose of the problem is to use as few
@@ -727,7 +767,7 @@ Once this process has been repeated for each day given in our range of time,
 we can then summarize the data we've recorded to understand the costs
 associated with this variation's of region delivery system.
 
-Continue on to {\hyperref[\detokenize{reporting:reporting}]{\sphinxcrossref{\DUrole{std,std-ref}{Reporting}}}}
+Continue on to {\hyperref[\detokenize{reporting:reporting}]{\sphinxcrossref{\DUrole{std,std-ref}{Reporting Our Results}}}}
 
 
 \section{Documentation}
@@ -1072,10 +1112,10 @@ numpy.ndarray
 
 
 
-\chapter{Reporting}
-\label{\detokenize{reporting:reporting}}\label{\detokenize{reporting::doc}}\label{\detokenize{reporting:id1}}
+\chapter{Reporting Our Results}
+\label{\detokenize{reporting:reporting}}\label{\detokenize{reporting::doc}}\label{\detokenize{reporting:reporting-our-results}}
 Upon completion of the hauler routing for every day in our data set, we are
-left with three complete pieces of information.
+left with three complete pieces of information as our results.
 \begin{itemize}
 \item {} 
 how much demand each site had each day (smoothed)
@@ -1107,7 +1147,8 @@ and pick-ups. Later in the reporting process, this decision can be reinforced
 by graphs mapping out how much each hauler works on each day, telling us
 whether or not such an overtime strategy would be effective in replacing a
 given equipment hauler. With this information we can calculate the cost to
-staff the required number of equipment haulers.
+staff the required number of equipment haulers, the first required piece of
+information in estimating cost.
 
 For example, the image below illustrates what the results of this summary
 might look like. It's pretty easy to tell that the last three haulers
@@ -1132,7 +1173,8 @@ of miles the fleet runs each day for our time period. An example of this
 number appears at the top of the first image. Then taking the ratio of fleet
 expected lifetime mileage and time period mileage yields how many time periods
 the fleet can run before replacement. Knowing the size of our fleet and how
-often it needs replaced, we can infer costs for our semi-trucks.
+often it needs replaced, we can infer costs for our semi-trucks, our second
+crucial piece of information.
 
 
 \section{Equipment Sets Cost}
@@ -1177,8 +1219,11 @@ second graph shows us how much additional utility each set of equipment adds,
 further detailing how many equipment sets are needed to meet the demand. With
 this information, we can now infer how many sets of construction equipment
 are needed as well as how much each set will cost (renting/buying is determined
-by a utilization threshold). An example of the first graphic is shown below,
-followed by an example of the second.
+by a utilization threshold, anything below is rented and above is bought). An
+example of the first graphic is shown below, followed by an example of the
+second. With an idea in hand of what threshold of utilization is needed to buy
+a set of equipment vs. rent it, we can calculate a total cost for the sets of
+equipment required by the delivery system.
 
 \noindent\sphinxincludegraphics{{equipment_utilization1}.png}
 
@@ -1189,23 +1234,23 @@ followed by an example of the second.
 \label{\detokenize{reporting:decision}}
 At this point, all of the above information is compiled into a single report
 corresponding to the given variation of a region, and can be used to calculate
-the cost of this variation's delivery system. There are two things I'd like to
-point out at this time about making the calculation on total cost. The graphs
-above and in the report give no recommendation on how many assets to buy, as
-it was preferred by the construction company to interpret themselves. There is
-also no unit cost listed for any of the assets as the company asked that the
-finances of their potential investments be kept private. However, the report
-that the code saves at the end can be used for figuring out how many of each
-asset is necessary for a delivery system and, with one's own financial
-assumptions, an estimation on cost can be made.
+the cost of this variation's delivery system subject to the time window used.
+For an example of what a complete report looks like, I invite you to download
+\sphinxcode{topeka\_base\_report.pdf} (available for
+download at \url{https://github.com/spkelle2/Equipment\_Routing} if you're reading
+from a pdf). Finding the minimum
+cost of all variations and time windows tested for a given geographical region
+reveal to us the estimated cost of investment for the internal delivery system.
+In the case of the construction company, comparing these minimum costs to the
+current cost of operation in each of their geographical regions was used to
+determine if the internal delivery system was desirable.
 
-Providing that there exists at least one variation in each region that costs
-less than the current process of transporting equipment sets, it would be
-advised that the construction company change their equipment transportation
-method to the internal delivery system.
-
-With a full means now of understanding how a decision can be made, I invite
-you to look at my closing remarks on the project.
+In summary, the results of all the code and models are accurate estimates of
+the investments an organization would need to support a single, large
+commodity delivery network. These investments can be clearly interpreted by
+means of the graphs compiled in the output report. With a full means now of
+understanding how a decision can be made, I invite you to look at my closing
+remarks on the project.
 
 Continue to {\hyperref[\detokenize{conclusion:conclusion}]{\sphinxcrossref{\DUrole{std,std-ref}{Conclusion}}}}
 
@@ -1429,7 +1474,8 @@ helped me get to this point, especially my father who instilled in me the
 work ethic required to gain the experience I needed to complete this project.
 
 Moving forward, I'd like to continue developing products, like this one, that
-will leverage optimization methods for providing decision support. For any
+will allow any person, regardless of background in math or computing, to
+leverage optimization methods for providing decision support. For any
 questions or inquiries, please feel free to reach me at the contact
 information below.
 

@@ -56,7 +56,8 @@ helped me get to this point, especially my father who instilled in me the
 work ethic required to gain the experience I needed to complete this project.
 
 Moving forward, I'd like to continue developing products, like this one, that
-will leverage optimization methods for providing decision support. For any
+will allow any person, regardless of background in math or computing, to
+leverage optimization methods for providing decision support. For any
 questions or inquiries, please feel free to reach me at the contact
 information below.
 

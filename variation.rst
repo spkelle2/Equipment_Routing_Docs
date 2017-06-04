@@ -29,8 +29,17 @@ Set-Up for Daily Computations
 Assigning the time window as optimally as possible, the first step for each
 variation of region is to smooth the demand for the number of drop-offs and
 pick-ups to be made each day as evenly as possible subject to all drop-offs
-and pick-ups occuring within the time window. (The section "Smoothing Demand"
-below will cover this process more in depth.) We then create two tables, the
+and pick-ups occuring within the time window before a work at a site begins
+or after work at a site ends. (The section "Smoothing Demand" below will
+cover this process more in depth.)
+
+.. note::
+    
+    To assign the time window as optimally as possible, it is suggested to
+    try a small range of values in order to see which returns a least total
+    cost in the report output at the end.
+
+We then create two tables, the
 first recording how many miles all semi-trucks run each day and the second
 recording how many hours each equipment hauler works each day. We then return
 to the data sheet with the number of equipment sets to be picked-up or
@@ -52,8 +61,8 @@ haulers we need for each day. Before diving into that, though, let's take a
 second to understand what's going on in the demand smoothing part I mentioned
 above.
 
-Smoothing Demand: Integer Program
----------------------------------
+Demand Smoothing Model
+----------------------
 
 As mentioned previously, the purpose of smoothing our demand for
 equipment drop-offs and pick-ups is to greatly reduce the amount of
@@ -89,7 +98,7 @@ single day, :math:`l`. We can now form the following integer program:
     &\text{s.t.:} & & & &
 
     & \sum_{l' \in S_{i,l}} & w_{i,l'} & = |d_{i,l}| \text{ } & \forall
-    & \text{ } i,l : S_{i,l} \neq \text{{}} &(2)
+    & \text{ } i,l : S_{i,l} \neq \{\} &(2)
 
     & \sum_{i} & w_{i,l} & \leq z \text{ } & \forall & \text{ } l &(3)
 
@@ -111,8 +120,8 @@ needed done, and :math:`(1)` and :math:`(3)` ensure the number of trips being
 made each day are as few as possible. :math:`(4)` simply prevents any half-
 drop-offs or half-pick-ups from being made.
 
-Smoothing Demand: Improvement Algorithm
----------------------------------------
+Demand Smoothing Improvement Algorithm
+--------------------------------------
 
 One issue I saw with the formulation we came up with is that if a couple of
 days were to have a much higher demand for drop-offs and pick-ups than

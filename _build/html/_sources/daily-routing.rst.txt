@@ -88,8 +88,8 @@ Also recall a few parameters we stated as inputs for each region we'll solve.
 
     * average time to load/unload a semi-truck (handling time), :math:`h`
 
-Developing the Model
---------------------
+Developing the Routing Model
+----------------------------
 
 Lastly, the problem makes use of two variables. The first variable is
 :math:`x_{i,j,k}`, the number of times equipment hauler, :math:`k`, takes the
@@ -164,8 +164,8 @@ Lastly, :math:`(10)-(11)` define the spaces for our variables, specifically
 that equipment haulers can take no partial routes and either enter or do not
 enter any given set of sites.
 
-Running the Model
------------------
+Running the Routing Model
+-------------------------
 
 One final piece of information remains to fully define our integer program
 for hauler routing, how many haulers (and therefore trucks) are available

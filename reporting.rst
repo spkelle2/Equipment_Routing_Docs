@@ -1,10 +1,10 @@
 .. _reporting:
 
-Reporting
-=========
+Reporting Our Results
+=====================
 
 Upon completion of the hauler routing for every day in our data set, we are
-left with three complete pieces of information.
+left with three complete pieces of information as our results.
 
     * how much demand each site had each day (smoothed)
 
@@ -31,7 +31,8 @@ and pick-ups. Later in the reporting process, this decision can be reinforced
 by graphs mapping out how much each hauler works on each day, telling us
 whether or not such an overtime strategy would be effective in replacing a
 given equipment hauler. With this information we can calculate the cost to
-staff the required number of equipment haulers.
+staff the required number of equipment haulers, the first required piece of
+information in estimating cost.
 
 For example, the image below illustrates what the results of this summary
 might look like. It's pretty easy to tell that the last three haulers
@@ -55,7 +56,8 @@ of miles the fleet runs each day for our time period. An example of this
 number appears at the top of the first image. Then taking the ratio of fleet
 expected lifetime mileage and time period mileage yields how many time periods
 the fleet can run before replacement. Knowing the size of our fleet and how
-often it needs replaced, we can infer costs for our semi-trucks.
+often it needs replaced, we can infer costs for our semi-trucks, our second
+crucial piece of information.
 
 Equipment Sets Cost
 -------------------
@@ -94,8 +96,11 @@ second graph shows us how much additional utility each set of equipment adds,
 further detailing how many equipment sets are needed to meet the demand. With
 this information, we can now infer how many sets of construction equipment
 are needed as well as how much each set will cost (renting/buying is determined
-by a utilization threshold). An example of the first graphic is shown below,
-followed by an example of the second.
+by a utilization threshold, anything below is rented and above is bought). An
+example of the first graphic is shown below, followed by an example of the
+second. With an idea in hand of what threshold of utilization is needed to buy
+a set of equipment vs. rent it, we can calculate a total cost for the sets of
+equipment required by the delivery system.
 
 .. image:: equipment_utilization1.png
 
@@ -106,23 +111,23 @@ Decision
 
 At this point, all of the above information is compiled into a single report
 corresponding to the given variation of a region, and can be used to calculate
-the cost of this variation's delivery system. There are two things I'd like to
-point out at this time about making the calculation on total cost. The graphs
-above and in the report give no recommendation on how many assets to buy, as
-it was preferred by the construction company to interpret themselves. There is
-also no unit cost listed for any of the assets as the company asked that the
-finances of their potential investments be kept private. However, the report
-that the code saves at the end can be used for figuring out how many of each
-asset is necessary for a delivery system and, with one's own financial
-assumptions, an estimation on cost can be made.
+the cost of this variation's delivery system subject to the time window used.
+For an example of what a complete report looks like, I invite you to download
+:download:`topeka_base_report.pdf <topeka_base_report.pdf>` (available for
+download at https://github.com/spkelle2/Equipment_Routing if you're reading
+from a pdf). Finding the minimum
+cost of all variations and time windows tested for a given geographical region
+reveal to us the estimated cost of investment for the internal delivery system.
+In the case of the construction company, comparing these minimum costs to the
+current cost of operation in each of their geographical regions was used to
+determine if the internal delivery system was desirable.
 
-Providing that there exists at least one variation in each region that costs
-less than the current process of transporting equipment sets, it would be
-advised that the construction company change their equipment transportation
-method to the internal delivery system.
-
-With a full means now of understanding how a decision can be made, I invite
-you to look at my closing remarks on the project.
+In summary, the results of all the code and models are accurate estimates of
+the investments an organization would need to support a single, large
+commodity delivery network. These investments can be clearly interpreted by
+means of the graphs compiled in the output report. With a full means now of
+understanding how a decision can be made, I invite you to look at my closing
+remarks on the project.
 
 Continue to :ref:`conclusion`
 

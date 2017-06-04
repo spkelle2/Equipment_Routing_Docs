@@ -48,21 +48,31 @@
 <span id="id1"></span><h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
 <p>This documentation explains the math, algorithms, and computer code used to
 arrive at a solution for how to transport sets of construction equipment kept
-in various geographical regions for a national construction company.</p>
-<p>This problem concerns a construction company inquiring if it would be more
-profitable to transfer the responsibility of delivering construction
-equipment from the construction crews to an internal delivery service for
-each geographical region in which they do business. Such a delivery service
-would consist of semi-trucks and flatbed trailers, as well as equipment
-haulers (truck drivers), and would be responsible for moving equipment to
-construction sites in the region before jobs begin and from them once
-they end. Currently, the construction crews have extra licensing and large
-vehicles only fully utilized on days they move equipment to and from the
-sites. A comparison of costs can be used to determine which is the more
-effective system.</p>
+in various geographical regions for a national construction company. In the
+general sense, the code explained details the necessary investments of
+delivery vehicles and commodities to make feasible a single, large commodity
+delivery network, where large means that one unit of the commodity equals the
+capacity of our delivery vehicle. The single, large commodity delivery network
+will be known throughout the rest of the documentation as &#8220;the internal
+delivery system.&#8221;</p>
+<p>The current state of the construction company&#8217;s delivery of equipment sets
+(their large commodity) involves the crews working at each job site to take time
+away from building at the start and end of their projects to move all of the
+sets of equipment they need. Further adding to costs, the crews have extra
+licensing and fuel inefficient vehichles they only fully utilize on the days
+they move equipment. The construction company believed there to be a more
+efficient means of operating.</p>
+<p>In its inception, this problem concerned the construction
+company inquiring if an internal delivery system using its own drivers for
+moving sets of construction equipment would be more profitable than the crews
+moving the sets of equipment on their own for each geographical region in
+which they do business. Such a delivery system would consist of semi-trucks
+and flatbed trailers, as well as equipment haulers (truck drivers), and would
+be responsible for moving equipment sets to construction sites in the region
+before jobs begin and from them once they end.</p>
 <p>With the costs of the crews moving the equipment on their own known to the
 construction company already, this work will focus on the calculation of
-costs for the new delivery service, namely:</p>
+costs for the new delivery system, namely:</p>
 <blockquote>
 <div><ul class="simple">
 <li>the number of semi-trucks and trailers</li>
@@ -70,6 +80,18 @@ costs for the new delivery service, namely:</p>
 <li>the number of construction equipment sets</li>
 </ul>
 </div></blockquote>
+<p>The output of the code described by this documentation is a report detailing
+the utilization of semi-trucks/haulers and equipment sets. This report can
+then be used to estimate the cost of the internal delivery system, leading us
+to make a comparison of the two systems and a confidently made decision.</p>
+<div class="section" id="python-implementation">
+<h2>Python Implementation<a class="headerlink" href="#python-implementation" title="Permalink to this headline">¶</a></h2>
+<p>If you&#8217;d like to follow along in the code for which this documentation was
+created, I invite you to check out its repository at
+<a class="reference external" href="https://github.com/spkelle2/Equipment_Routing">https://github.com/spkelle2/Equipment_Routing</a>. Most following chapters have
+a &#8220;Documentation&#8221; section detailing where specifically in the code you can
+find what is explained here.</p>
+</div>
 <div class="section" id="topics">
 <h2>Topics<a class="headerlink" href="#topics" title="Permalink to this headline">¶</a></h2>
 <p>I&#8217;ll cover a few different topics throughout this documentation in order to
@@ -86,7 +108,7 @@ interested in the math, read this part and the next.</li>
 <li><a class="reference internal" href="daily-routing.html#daily-routing"><span class="std std-ref">Daily Routing</span></a> explains the data manipulation and calculations
 that require being solved one day at a time, for each variation of
 region we consider.</li>
-<li><a class="reference internal" href="reporting.html#reporting"><span class="std std-ref">Reporting</span></a> outlines how all of the data and calculations from the
+<li><a class="reference internal" href="reporting.html#reporting"><span class="std std-ref">Reporting Our Results</span></a> outlines how all of the data and calculations from the
 previous two topics come together into one final report that can be
 used to make a decision on using the internal delivery system.</li>
 <li>In <a class="reference internal" href="conclusion.html#conclusion"><span class="std std-ref">Conclusion</span></a>, I&#8217;ll give my closing remarks on the project.</li>
@@ -108,6 +130,7 @@ work!</p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Introduction</a><ul>
+<li><a class="reference internal" href="#python-implementation">Python Implementation</a></li>
 <li><a class="reference internal" href="#topics">Topics</a></li>
 </ul>
 </li>

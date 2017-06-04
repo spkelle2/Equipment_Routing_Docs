@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2017.2.10)  1 JUN 2017 17:11
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2017.2.10)  4 JUN 2017 13:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1058,17 +1058,15 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
 
 ]
 Chapter 1.
-LaTeX Font Info:    Try loading font information for TS1+ptm on input line 80.
+LaTeX Font Info:    Try loading font information for TS1+ptm on input line 91.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 ) [1
 
-] [2
-
-]
+] [2]
 Chapter 2.
-<coordinates1.png, id=175, 163.3603pt x 259.7203pt>
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 204.
+<coordinates1.png, id=181, 163.3603pt x 259.7203pt>
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 229.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
@@ -1076,13 +1074,15 @@ File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 File: coordinates1.png Graphic file (type png)
 
 <use coordinates1.png>
-Package pdftex.def Info: coordinates1.png used on input line 204.
+Package pdftex.def Info: coordinates1.png used on input line 229.
 (pdftex.def)             Requested size: 163.3599pt x 259.71967pt.
- [3] <demand1.png, id=181, 395.22656pt x 341.02406pt>
+ [3
+
+] <demand1.png, id=187, 395.22656pt x 341.02406pt>
 File: demand1.png Graphic file (type png)
 
 <use demand1.png>
-Package pdftex.def Info: demand1.png used on input line 206.
+Package pdftex.def Info: demand1.png used on input line 231.
 (pdftex.def)             Requested size: 395.22559pt x 341.02322pt.
  [4 <./coordinates1.png> <./demand1.png>] [5] [6
 
@@ -1098,14 +1098,14 @@ Chapter 4.
 [11
 
 ] [12] [13] [14]
-Underfull \hbox (badness 10000) in paragraph at lines 987--987
+Underfull \hbox (badness 10000) in paragraph at lines 1027--1027
 []\T1/ptm/m/it/10 fleet_size\T1/ptm/m/n/10 , \T1/ptm/m/it/10 date_index\T1/ptm/
 m/n/10 , \T1/ptm/m/it/10 fleet_mileage\T1/ptm/m/n/10 , \T1/ptm/m/it/10 ob-jec-t
 ive\T1/ptm/m/n/10 ,
  []
 
 [15]
-Underfull \hbox (badness 10000) in paragraph at lines 1028--1028
+Underfull \hbox (badness 10000) in paragraph at lines 1068--1068
 []\T1/ptm/m/it/10 hauler_hours\T1/ptm/m/n/10 , \T1/ptm/m/it/10 vari-ables\T1/pt
 m/m/n/10 , \T1/ptm/m/it/10 han-dle\T1/ptm/m/n/10 , \T1/ptm/m/it/10 travel_rate\
 T1/ptm/m/n/10 , \T1/ptm/m/it/10 fleet_size\T1/ptm/m/n/10 ,
@@ -1113,33 +1113,33 @@ T1/ptm/m/n/10 , \T1/ptm/m/it/10 fleet_size\T1/ptm/m/n/10 ,
 
 [16]
 Chapter 5.
-<hauler_summary.png, id=264, 552.56438pt x 149.05687pt>
+<hauler_summary.png, id=271, 552.56438pt x 149.05687pt>
 File: hauler_summary.png Graphic file (type png)
 
 <use hauler_summary.png>
-Package pdftex.def Info: hauler_summary.png used on input line 1119.
+Package pdftex.def Info: hauler_summary.png used on input line 1160.
 (pdftex.def)             Requested size: 469.75502pt x 126.71713pt.
- <individual_hauler.png, id=265, 578.16pt x 433.62pt>
+ <individual_hauler.png, id=272, 578.16pt x 433.62pt>
 File: individual_hauler.png Graphic file (type png)
 
 <use individual_hauler.png>
-Package pdftex.def Info: individual_hauler.png used on input line 1121.
+Package pdftex.def Info: individual_hauler.png used on input line 1162.
 (pdftex.def)             Requested size: 469.75502pt x 352.31538pt.
  [17
 
  <./hauler_summary.png>] [18 <./individual_hauler.png>] <equipment_utilization1
-.png, id=278, 539.8569pt x 405.4347pt>
+.png, id=285, 539.8569pt x 405.4347pt>
 File: equipment_utilization1.png Graphic file (type png)
 
 <use equipment_utilization1.png>
-Package pdftex.def Info: equipment_utilization1.png used on input line 1183.
+Package pdftex.def Info: equipment_utilization1.png used on input line 1228.
 (pdftex.def)             Requested size: 469.75502pt x 352.79338pt.
 
-<cumulative_utilization.png, id=279, 536.2434pt x 402.5439pt>
+<cumulative_utilization.png, id=286, 536.2434pt x 402.5439pt>
 File: cumulative_utilization.png Graphic file (type png)
 
 <use cumulative_utilization.png>
-Package pdftex.def Info: cumulative_utilization.png used on input line 1185.
+Package pdftex.def Info: cumulative_utilization.png used on input line 1230.
 (pdftex.def)             Requested size: 469.75502pt x 352.64272pt.
  [19 <./equipment_utilization1.png>] [20 <./cumulative_utilization.png>] [21] [
 22]
@@ -1150,23 +1150,23 @@ Chapter 6.
 
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1448.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1448.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1494.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1494.
 
 (./LogisticsOptimizationforRegionallyLocatedEquipment.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1448.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1448.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1494.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1494.
 
 Package rerunfilecheck Info: File `LogisticsOptimizationforRegionallyLocatedEqu
 ipment.out' has not changed.
-(rerunfilecheck)             Checksum: 36278F42B79B042B47B206FC2D715FDB;3503.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1448.
+(rerunfilecheck)             Checksum: FAA59955F3F43C6C3CDF63C6C3DE3A7B;3755.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1494.
  ) 
 Here is how much of TeX's memory you used:
- 13672 strings out of 495028
- 189577 string characters out of 6181497
- 282313 words of memory out of 5000000
- 16485 multiletter control sequences out of 15000+600000
+ 13675 strings out of 495028
+ 189661 string characters out of 6181497
+ 281401 words of memory out of 5000000
+ 16487 multiletter control sequences out of 15000+600000
  47619 words of font info for 67 fonts, out of 8000000 for 9000
  15 hyphenation exceptions out of 8191
  37i,16n,49p,436b,579s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1188,10 +1188,10 @@ a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/sha
 re/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/urw/times/utmri8a.pfb>
 Output written on LogisticsOptimizationforRegionallyLocatedEquipment.pdf (29 pa
-ges, 345110 bytes).
+ges, 348551 bytes).
 PDF statistics:
- 418 PDF objects out of 1000 (max. 8388607)
- 351 compressed objects within 4 object streams
- 78 named destinations out of 1000 (max. 500000)
- 259 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 427 PDF objects out of 1000 (max. 8388607)
+ 360 compressed objects within 4 object streams
+ 79 named destinations out of 1000 (max. 500000)
+ 267 words of extra memory for PDF output out of 10000 (max. 10000000)
 
