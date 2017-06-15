@@ -40,7 +40,7 @@
 
 
 \title{Logistics Optimization for Regionally Located Equipment Documentation}
-\date{Jun 04, 2017}
+\date{Jun 16, 2017}
 \release{}
 \author{Sean Kelley}
 \newcommand{\sphinxlogo}{}
@@ -231,7 +231,7 @@ The second image below shows an example.
 \noindent\sphinxincludegraphics{{demand1}.png}
 
 \begin{sphinxadmonition}{note}{Note:}
-A full example of what a proper data sheet cooresponding with the code
+For a full example of what a proper data sheet cooresponding with the code
 looks like, check the repository at
 \url{https://github.com/spkelle2/Equipment\_Routing}.
 \end{sphinxadmonition}
@@ -636,8 +636,8 @@ value of demand between the two sites.
 \end{itemize}
 
 This assignment is very particular. Please see the documentation below
-(make\_route\_constraints) and its definition in the parameters module
-for more details.
+(make\_route\_constraints) and its definition in the parameters.py module
+in the github repository for more details.
 
 \end{description}
 
@@ -697,7 +697,13 @@ is \(y_{m,k}\), whether or not an equipment hauler, \(k\), enters the
 subset of points, \(m\).
 
 Now that we have declared all of our parameters we will need to solve our
-equipment hauler routing for each day, we can define our model.
+equipment hauler routing for each day, we can define our model %
+\begin{footnote}[1]\sphinxAtStartFootnote
+(2) - (4), as well as inspiration for the rest of the constraints,
+originate from the ``Vehichle Routing Problem with Time Windows'' chapter
+of \sphinxstyleemphasis{Column Generation} by Desaulniers, Desrosiers, and Solomon.
+%
+\end{footnote} .
 \begin{align*}\!\begin{aligned}
 \text{min} &\sum_{i} \sum_{j} \sum_{k} & &t_{i,j}x_{i,j,k} & & & & &(1)\\
 \text{s.t.:}\\
@@ -723,8 +729,8 @@ k \in \text{haulers} &(10)\\
 \in \text{subsets} &(11)\\
 \end{aligned}\end{align*}
 \((1)\) tells us our objective is to minimize the total amount of distance
-that our fleet of equipment haulers cover each day. \((2)-(4)\)
-add constraints for modeling the travel from one site to the next. \((2)\)
+that our fleet of equipment haulers cover each day. \((2)-(4)\) add
+constraints for modeling the travel from one site to the next. \((2)\)
 says that each hauler must leave the hub each day, even if just to return to it
 at no cost (equivalent to not being used). If a hauler arrives at a site,
 \(h\), to make a drop-off or a pick-up, \((3)\) ensures that hauler

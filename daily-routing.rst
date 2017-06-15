@@ -58,8 +58,8 @@ able to solve. They are the following:
           value of demand between the two sites.
 
         This assignment is very particular. Please see the documentation below
-        (make_route_constraints) and its definition in the parameters module
-        for more details.
+        (make_route_constraints) and its definition in the parameters.py module
+        in the github repository for more details.
       
     * travel, :math:`t_{i,j}`
         A matrix stating how many miles apart a site, :math:`i`, is from a
@@ -98,7 +98,7 @@ is :math:`y_{m,k}`, whether or not an equipment hauler, :math:`k`, enters the
 subset of points, :math:`m`.
 
 Now that we have declared all of our parameters we will need to solve our
-equipment hauler routing for each day, we can define our model.
+equipment hauler routing for each day, we can define our model [#]_ .
 
 .. math::
 
@@ -137,8 +137,8 @@ equipment hauler routing for each day, we can define our model.
    \in \text{subsets} &(11)
  
 :math:`(1)` tells us our objective is to minimize the total amount of distance
-that our fleet of equipment haulers cover each day. :math:`(2)-(4)`
-add constraints for modeling the travel from one site to the next. :math:`(2)`
+that our fleet of equipment haulers cover each day. :math:`(2)-(4)` add
+constraints for modeling the travel from one site to the next. :math:`(2)`
 says that each hauler must leave the hub each day, even if just to return to it
 at no cost (equivalent to not being used). If a hauler arrives at a site,
 :math:`h`, to make a drop-off or a pick-up, :math:`(3)` ensures that hauler
@@ -224,4 +224,9 @@ Summary of time equipment haulers spent working on a given day:
 .. autofunction:: recording.record_hauler_hours
 
 
+.. rubric:: Footnotes
+
+.. [#] (2) - (4), as well as inspiration for the rest of the constraints,
+    originate from the "Vehichle Routing Problem with Time Windows" chapter
+    of *Column Generation* by Desaulniers, Desrosiers, and Solomon.
 

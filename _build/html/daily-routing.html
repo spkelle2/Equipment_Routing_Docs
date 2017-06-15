@@ -109,8 +109,8 @@ opposite demand at another as many times as is the minimum absolute
 value of demand between the two sites.</li>
 </ul>
 <p class="last">This assignment is very particular. Please see the documentation below
-(make_route_constraints) and its definition in the parameters module
-for more details.</p>
+(make_route_constraints) and its definition in the parameters.py module
+in the github repository for more details.</p>
 </dd>
 </dl>
 </li>
@@ -164,7 +164,7 @@ route from a site, <span class="math">\(i\)</span>, to a site, <span class="math
 is <span class="math">\(y_{m,k}\)</span>, whether or not an equipment hauler, <span class="math">\(k\)</span>, enters the
 subset of points, <span class="math">\(m\)</span>.</p>
 <p>Now that we have declared all of our parameters we will need to solve our
-equipment hauler routing for each day, we can define our model.</p>
+equipment hauler routing for each day, we can define our model <a class="footnote-reference" href="#id3" id="id2">[1]</a> .</p>
 <div class="math">
 \[ \begin{align}\begin{aligned}\text{min} &amp;\sum_{i} \sum_{j} \sum_{k} &amp; &amp;t_{i,j}x_{i,j,k} &amp; &amp; &amp; &amp; &amp;(1)\\\text{s.t.:}\\&amp;\sum_{j\backslash\{0\}} &amp; &amp;x_{0,j,k} &amp; &amp;\geq 1 &amp; &amp;\forall \text{ } k \in
 \text{haulers} &amp;(2)\\&amp;\sum_{i} x_{i,h,k} &amp;-\sum_{j} &amp;x_{h,j,k} &amp; &amp;= 0 &amp; &amp;\forall \text{ } h \in
@@ -178,8 +178,8 @@ y_{m,k} &amp; &amp;\forall \text{ } k \in \text{haulers}, m \in \text{subsets} &
 k \in \text{haulers} &amp;(10)\\&amp; &amp; &amp;y_{m,k} &amp; &amp;\in \{0,1\} &amp; &amp;\forall \text{ } k \in \text{haulers}, m
 \in \text{subsets} &amp;(11)\end{aligned}\end{align} \]</div>
 <p><span class="math">\((1)\)</span> tells us our objective is to minimize the total amount of distance
-that our fleet of equipment haulers cover each day. <span class="math">\((2)-(4)\)</span>
-add constraints for modeling the travel from one site to the next. <span class="math">\((2)\)</span>
+that our fleet of equipment haulers cover each day. <span class="math">\((2)-(4)\)</span> add
+constraints for modeling the travel from one site to the next. <span class="math">\((2)\)</span>
 says that each hauler must leave the hub each day, even if just to return to it
 at no cost (equivalent to not being used). If a hauler arrives at a site,
 <span class="math">\(h\)</span>, to make a drop-off or a pick-up, <span class="math">\((3)\)</span> ensures that hauler
@@ -502,6 +502,15 @@ the hub)</li>
 </table>
 </dd></dl>
 
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td>(2) - (4), as well as inspiration for the rest of the constraints,
+originate from the &#8220;Vehichle Routing Problem with Time Windows&#8221; chapter
+of <em>Column Generation</em> by Desaulniers, Desrosiers, and Solomon.</td></tr>
+</tbody>
+</table>
 </div>
 </div>
 
